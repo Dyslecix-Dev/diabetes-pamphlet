@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import ProgressBar from "../components/ProgressBar";
 import ChapterNav from "../components/ChapterNav";
 import SectionOne from "../components/section-one/SectionOne";
+import SectionTwo from "../components/section-two/SectionTwo";
 ---
 
 <Layout>
@@ -11,9 +12,7 @@ import SectionOne from "../components/section-one/SectionOne";
 
   <main>
     <SectionOne client:load />
-    <section id="section-2" class="min-h-screen flex items-center justify-center bg-bg-section">
-      <p class="text-text-muted font-body">Section 2: Type I vs. Type II — coming soon</p>
-    </section>
+    <SectionTwo client:load />
     <section id="section-3" class="min-h-screen flex items-center justify-center">
       <p class="text-text-muted font-body">Section 3: How It Develops — coming soon</p>
     </section>

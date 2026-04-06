@@ -51,11 +51,11 @@ This section exercises all core patterns: scrollama, GSAP animation, D3 chart, l
 
 ## Phase 5: Section 2 — Type I vs. Type II
 
-- [ ] `PopulationSplit.tsx` — 100 SVG human figures. Animate split on step 4 (T1) and step 6 (T2). Step 10 adds prediabetes overlay.
-- [ ] `TypeComparison.tsx` — side-by-side info cards for T1 vs T2
-- [ ] `YouthIncidence.tsx` — D3 chart showing T1D +2.02%/yr vs T2D +5.31%/yr using `youth-incidence.json`
-- [ ] Wire into `ScrollySection` with 10 narrative steps
-- [ ] Test population animation performance (100 SVG elements)
+- [x] `PopulationSplit.tsx` — 100 SVG human figures. Animate split on step 4 (T1) and step 6 (T2). Step 10 adds prediabetes overlay.
+- [x] `TypeComparison.tsx` — side-by-side info cards for T1 vs T2
+- [x] `YouthIncidence.tsx` — D3 chart showing T1D +2.02%/yr vs T2D +5.31%/yr using `youth-incidence.json`
+- [x] Wire into `ScrollySection` with 10 narrative steps
+- [x] Test population animation performance (100 SVG elements)
 
 ## Phase 6: Section 5 — Risks and Prevention
 
