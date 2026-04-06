@@ -31,12 +31,12 @@ These persist across all sections.
 
 The reusable pattern every section uses.
 
-- [ ] `ScrollySection.tsx` — implements the scrollama + sticky visual pattern from `architecture.md`
-- [ ] `StickyVisual.tsx` — container component for the pinned visual panel
-- [ ] `NarrativeStep.tsx` — styled text step with fade-in behavior
-- [ ] Test with dummy content: 3 steps that change a background color on the sticky panel
-- [ ] Verify mobile stacking works (no sticky behavior below `lg`)
-- [ ] Verify reduced motion behavior
+- [x] `ScrollySection.tsx` — implements the scrollama + sticky visual pattern from `architecture.md`
+- [x] `StickyVisual.tsx` — container component for the pinned visual panel
+- [x] `NarrativeStep.tsx` — styled text step with fade-in behavior
+- [x] Test with dummy content: 3 steps that change a background color on the sticky panel
+- [x] Verify mobile stacking works (no sticky behavior below `lg`)
+- [x] Verify reduced motion behavior
 
 ## Phase 4: Section 1 — What Is Diabetes?
 
