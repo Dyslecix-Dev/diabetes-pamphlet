@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,jsx,astro,css,json}\" \".*.{ts,tsx,js,mjs,css,json}\"",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.2",
@@ -26,5 +29,25 @@
     "react-dom": "^19.2.4",
     "react-scrollama": "^2.4.2",
     "tailwindcss": "^4.2.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,mjs,jsx,css,json}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.astro": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^10.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.6.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "prettier-plugin-tailwindcss": "^0.7.2"
   }
 }

@@ -1,7 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(npx astro:*)"
-    ]
+    "allow": ["Bash(npx astro:*)", "Bash(ls /Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/eslint.config.*)", "Bash(pnpm husky:*)", "Bash(pnpm exec:*)"]
   }
 }
