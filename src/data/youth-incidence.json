@@ -23,11 +23,7 @@
       "t2d_explanation": "Back-to-school physical exams detecting asymptomatic hyperglycemia"
     },
     "racial_ethnic_disparities": {
-      "highest_increase_groups": [
-        "Asian/Pacific Islander",
-        "Hispanic",
-        "Non-Hispanic Black"
-      ],
+      "highest_increase_groups": ["Asian/Pacific Islander", "Hispanic", "Non-Hispanic Black"],
       "comparison": "Annual percent increases for T1D and T2D were higher among racial and ethnic minority youth than non-Hispanic White youth"
     },
     "adult_contrast": {

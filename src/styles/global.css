@@ -2,17 +2,17 @@
 
 /* ── Tailwind v4 theme tokens ── */
 @theme {
-  --color-green-dark: #40513B;
+  --color-green-dark: #40513b;
   --color-green-mid: #628141;
-  --color-cream: #E5D9B6;
-  --color-orange-accent: #E67E22;
-  --color-danger: #C0392B;
-  --color-danger-light: #E74C3C;
-  --color-success: #27AE60;
-  --color-bg: #FAFAF5;
-  --color-bg-section: #F5F0E3;
-  --color-text-primary: #2D2D2D;
-  --color-text-muted: #6B6B6B;
+  --color-cream: #e5d9b6;
+  --color-orange-accent: #e67e22;
+  --color-danger: #c0392b;
+  --color-danger-light: #e74c3c;
+  --color-success: #27ae60;
+  --color-bg: #fafaf5;
+  --color-bg-section: #f5f0e3;
+  --color-text-primary: #2d2d2d;
+  --color-text-muted: #6b6b6b;
 
   --font-display: "DM Serif Display", serif;
   --font-body: "DM Sans", sans-serif;
@@ -21,17 +21,17 @@
 
 /* ── CSS custom properties (for direct use outside Tailwind) ── */
 :root {
-  --color-green-dark: #40513B;
+  --color-green-dark: #40513b;
   --color-green-mid: #628141;
-  --color-cream: #E5D9B6;
-  --color-orange: #E67E22;
-  --color-danger: #C0392B;
-  --color-danger-light: #E74C3C;
-  --color-success: #27AE60;
-  --color-text: #2D2D2D;
-  --color-text-muted: #6B6B6B;
-  --color-bg: #FAFAF5;
-  --color-bg-section: #F5F0E3;
+  --color-cream: #e5d9b6;
+  --color-orange: #e67e22;
+  --color-danger: #c0392b;
+  --color-danger-light: #e74c3c;
+  --color-success: #27ae60;
+  --color-text: #2d2d2d;
+  --color-text-muted: #6b6b6b;
+  --color-bg: #fafaf5;
+  --color-bg-section: #f5f0e3;
 
   /* Transparency variants */
   --color-green-dark-10: rgba(64, 81, 59, 0.1);
@@ -50,12 +50,15 @@ body {
   background-color: var(--color-bg);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-display);
   color: var(--color-green-dark);
 }
 
-code, .font-mono {
+code,
+.font-mono {
   font-family: var(--font-mono);
 }
 
@@ -72,7 +75,9 @@ code, .font-mono {
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     transition: none !important;
     animation: none !important;
   }

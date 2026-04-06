@@ -1,5 +1,15 @@
 {
   "permissions": {
-    "allow": ["Bash(npx astro:*)", "Bash(ls /Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/eslint.config.*)", "Bash(pnpm husky:*)", "Bash(pnpm exec:*)"]
+    "allow": [
+      "Bash(npx astro:*)",
+      "Bash(ls /Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/eslint.config.*)",
+      "Bash(pnpm husky:*)",
+      "Bash(pnpm exec:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm format:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m 'Add prettier-plugin-astro and configure Prettier for Astro files:*)"
+    ]
   }
 }

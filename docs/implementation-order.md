@@ -8,24 +8,24 @@ Build in this sequence. Each phase establishes patterns that subsequent phases r
 
 Set up the foundation before any section work.
 
-- [ ] Initialize Astro project with React and Tailwind integrations
-- [ ] Configure `astro.config.mjs` with `@astrojs/react` and `@astrojs/tailwind`
-- [ ] Set up `tailwind.config.mjs` with custom color tokens (see `design-system.md`)
-- [ ] Create `src/styles/global.css` with CSS custom properties
-- [ ] Create `BaseLayout.astro` with HTML shell, Google Fonts, global styles
-- [ ] Install GSAP, D3, react-scrollama, lucide-react
-- [ ] Create `src/data/` directory and add all 4 JSON data files
-- [ ] Create `src/utils/a11y.ts` with `prefersReducedMotion` and `useReducedMotion`
-- [ ] Create placeholder `index.astro` that imports a test component
-- [ ] Verify build and dev server work
+- [x] Initialize Astro project with React and Tailwind integrations
+- [x] Configure `astro.config.mjs` with `@astrojs/react` and `@tailwindcss/vite` (Tailwind v4 uses Vite plugin, not `@astrojs/tailwind`)
+- [x] Set up Tailwind v4 color tokens via `@theme` in `src/styles/global.css` (no `tailwind.config.mjs` needed)
+- [x] Create `src/styles/global.css` with CSS custom properties
+- [x] Create `Layout.astro` with HTML shell, Google Fonts, global styles
+- [x] Install GSAP, D3, react-scrollama, lucide-react
+- [x] Create `src/data/` directory and add all 4 JSON data files
+- [x] Create `src/utils/a11y.ts` with `prefersReducedMotion` and `useReducedMotion`
+- [x] Create placeholder `index.astro` that imports a test component
+- [x] Verify build and dev server work
 
 ## Phase 2: Global UI Components
 
 These persist across all sections.
 
-- [ ] `ProgressBar.tsx` — sticky top bar showing scroll progress (0–100%). Use `role="progressbar"` with aria attributes.
-- [ ] `ChapterNav.tsx` — chapter dots or labels (6 sections). Clicking a dot scrolls to that section. Active state highlights current section.
-- [ ] Wire both into `index.astro`
+- [x] `ProgressBar.tsx` — sticky top bar showing scroll progress (0–100%). Use `role="progressbar"` with aria attributes.
+- [x] `ChapterNav.tsx` — chapter dots or labels (6 sections). Clicking a dot scrolls to that section. Active state highlights current section.
+- [x] Wire both into `index.astro`
 
 ## Phase 3: Scrollytelling Wrapper
 

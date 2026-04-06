@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Check if user prefers reduced motion (safe for SSR)
 export function prefersReducedMotion(): boolean {
