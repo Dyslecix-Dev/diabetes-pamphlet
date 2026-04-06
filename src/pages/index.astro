@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import ProgressBar from "../components/ProgressBar";
 import ChapterNav from "../components/ChapterNav";
-import ScrollyDemo from "../components/ScrollyDemo";
+import SectionOne from "../components/section-one/SectionOne";
 ---
 
 <Layout>
@@ -10,12 +10,7 @@ import ScrollyDemo from "../components/ScrollyDemo";
   <ChapterNav client:load />
 
   <main>
-    <!-- Phase 3 demo: scrollytelling wrapper test -->
-    <ScrollyDemo client:load />
-
-    <section id="section-1" class="min-h-screen flex items-center justify-center">
-      <p class="text-text-muted font-body">Section 1: What Is Diabetes? — coming soon</p>
-    </section>
+    <SectionOne client:load />
     <section id="section-2" class="min-h-screen flex items-center justify-center bg-bg-section">
       <p class="text-text-muted font-body">Section 2: Type I vs. Type II — coming soon</p>
     </section>

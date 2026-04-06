@@ -42,11 +42,11 @@ The reusable pattern every section uses.
 
 This section exercises all core patterns: scrollama, GSAP animation, D3 chart, live counter.
 
-- [ ] `GlucoseAnimation.tsx` — SVG molecule that assembles on scroll. GSAP-driven.
-- [ ] `PrevalenceChart.tsx` — D3 line chart using `prevalence.json`. Animate line drawing on step entry.
-- [ ] `DiagnosisCounter.tsx` — live counter starting from page entry. Use `requestAnimationFrame` or `setInterval`.
-- [ ] Wire all into `ScrollySection` with 8 narrative steps
-- [ ] Add accessible data table behind the chart
+- [x] `GlucoseAnimation.tsx` — SVG molecule that assembles on scroll. GSAP-driven.
+- [x] `PrevalenceChart.tsx` — D3 line chart using `prevalence.json`. Animate line drawing on step entry.
+- [x] `DiagnosisCounter.tsx` — live counter starting from page entry. Use `requestAnimationFrame` or `setInterval`.
+- [x] Wire all into `ScrollySection` with 8 narrative steps
+- [x] Add accessible data table behind the chart
 - [ ] Test on mobile
 
 ## Phase 5: Section 2 — Type I vs. Type II
