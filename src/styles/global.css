@@ -1,1 +1,96 @@
 @import "tailwindcss";
+
+/* ── Tailwind v4 theme tokens ── */
+@theme {
+  --color-green-dark: #40513B;
+  --color-green-mid: #628141;
+  --color-cream: #E5D9B6;
+  --color-orange-accent: #E67E22;
+  --color-danger: #C0392B;
+  --color-danger-light: #E74C3C;
+  --color-success: #27AE60;
+  --color-bg: #FAFAF5;
+  --color-bg-section: #F5F0E3;
+  --color-text-primary: #2D2D2D;
+  --color-text-muted: #6B6B6B;
+
+  --font-display: "DM Serif Display", serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* ── CSS custom properties (for direct use outside Tailwind) ── */
+:root {
+  --color-green-dark: #40513B;
+  --color-green-mid: #628141;
+  --color-cream: #E5D9B6;
+  --color-orange: #E67E22;
+  --color-danger: #C0392B;
+  --color-danger-light: #E74C3C;
+  --color-success: #27AE60;
+  --color-text: #2D2D2D;
+  --color-text-muted: #6B6B6B;
+  --color-bg: #FAFAF5;
+  --color-bg-section: #F5F0E3;
+
+  /* Transparency variants */
+  --color-green-dark-10: rgba(64, 81, 59, 0.1);
+  --color-orange-20: rgba(230, 126, 34, 0.2);
+  --color-danger-15: rgba(192, 57, 43, 0.15);
+}
+
+/* ── Base styles ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--color-green-dark);
+}
+
+code, .font-mono {
+  font-family: var(--font-mono);
+}
+
+/* ── Focus indicators ── */
+:focus-visible {
+  outline: 3px solid var(--color-orange);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Screen-reader only utility ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

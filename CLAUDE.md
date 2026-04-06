@@ -6,7 +6,7 @@ A Pudding-style scrollytelling website about diabetes, targeting community colle
 
 ## Architecture
 
-This is an Astro 5 project with React islands. Each of the 6 sections uses the same scrollytelling pattern: react-scrollama for narrative step triggers and GSAP ScrollTrigger for animations within the sticky visual panel.
+This is an Astro 6 project with React islands. Each of the 6 sections uses the same scrollytelling pattern: react-scrollama for narrative step triggers and GSAP ScrollTrigger for animations within the sticky visual panel.
 
 ### Layout Pattern
 
@@ -17,12 +17,12 @@ This is an Astro 5 project with React islands. Each of the 6 sections uses the s
 
 | Tool                     | Purpose                                             |
 | ------------------------ | --------------------------------------------------- |
-| **Astro 5**              | Static site generator, islands architecture         |
+| **Astro 6**              | Static site generator, islands architecture         |
 | **React 19**             | Interactive islands within Astro                    |
 | **GSAP + ScrollTrigger** | Scroll-pinned animations, timeline control          |
 | **D3.js 7**              | Data visualizations (charts, waffle charts, curves) |
 | **react-scrollama 2**    | Step-based narrative triggers                       |
-| **Tailwind CSS 3**       | Utility-first styling, responsive design            |
+| **Tailwind CSS 4**       | Utility-first styling, responsive design            |
 | **Lucide React**         | Icon system                                         |
 
 ### Key Dependencies
@@ -30,19 +30,21 @@ This is an Astro 5 project with React islands. Each of the 6 sections uses the s
 ```json
 {
   "dependencies": {
-    "astro": "^5.x",
+    "astro": "^6.x",
     "react": "^19.x",
     "react-dom": "^19.x",
-    "@astrojs/react": "^4.x",
-    "@astrojs/tailwind": "^6.x",
-    "gsap": "^3.12.x",
+    "@astrojs/react": "^5.x",
+    "@tailwindcss/vite": "^4.x",
+    "gsap": "^3.14.x",
     "d3": "^7.x",
     "react-scrollama": "^2.x",
-    "lucide-react": "^0.400.x",
-    "tailwindcss": "^3.x"
+    "lucide-react": "^1.x",
+    "tailwindcss": "^4.x"
   }
 }
 ```
+
+> **Note:** Tailwind v4 uses CSS-based configuration via `@theme` directives in `src/styles/global.css` instead of a `tailwind.config.mjs` file. It is integrated via `@tailwindcss/vite` in `astro.config.mjs` rather than `@astrojs/tailwind`.
 
 ## Design Tokens
 

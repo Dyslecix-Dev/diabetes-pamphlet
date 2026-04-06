@@ -1,0 +1,73 @@
+{
+  "source": "Diabetologia meta-analysis of diabetes-related amputations, 2010-2020",
+  "url": "https://www.sciencedirect.com/science/article/pii/S0168822722010087",
+  "amputation_data": {
+    "total_studies": 23,
+    "total_amputations_reported": 505390,
+    "period": "2010-2020",
+    "minor_amputation_rate_per_100k": {
+      "overall": 139.97,
+      "t1d": 148.59,
+      "t2d": 75.53
+    },
+    "major_amputation_rate_per_100k": {
+      "overall": 94.82,
+      "t1d": 100.76,
+      "t2d": 40.58
+    },
+    "by_gender_per_100k": {
+      "women": 83.84,
+      "men": 178.04
+    },
+    "gender_disparity": "Men face roughly 2x the amputation rate of women",
+    "type_disparity": "Type 1 diabetes patients have higher amputation rates than Type 2"
+  },
+  "complications_list": [
+    {
+      "organ": "nerves",
+      "label": "Nerve damage & numbness",
+      "detail": "Neuropathy, especially in hands and feet",
+      "svg_target": "nerves-path"
+    },
+    {
+      "organ": "legs",
+      "label": "Poor circulation & amputation",
+      "detail": "Infections, foot ulcers, lower extremity amputation",
+      "svg_target": "legs-path"
+    },
+    {
+      "organ": "eyes",
+      "label": "Eye damage & blindness",
+      "detail": "Diabetic retinopathy",
+      "svg_target": "eyes-path"
+    },
+    {
+      "organ": "mouth",
+      "label": "Tooth & gum disease",
+      "detail": "Periodontal disease, tooth loss",
+      "svg_target": "mouth-path"
+    },
+    {
+      "organ": "kidneys",
+      "label": "Kidney damage",
+      "detail": "Diabetic nephropathy — leading cause of kidney failure",
+      "svg_target": "kidneys-path"
+    },
+    {
+      "organ": "heart",
+      "label": "Heart disease",
+      "detail": "Increased cardiovascular disease risk",
+      "svg_target": "heart-path"
+    }
+  ],
+  "glucose_ranges_mg_dl": {
+    "normal_fasting": { "min": 70, "max": 99, "color": "success" },
+    "prediabetic": { "min": 100, "max": 125, "color": "orange" },
+    "diabetic": { "min": 126, "max": 300, "color": "danger" },
+    "hypoglycemia": {
+      "below": 70,
+      "color": "danger",
+      "symptoms": ["hunger", "shakiness", "dizziness", "fainting", "coma"]
+    }
+  }
+}

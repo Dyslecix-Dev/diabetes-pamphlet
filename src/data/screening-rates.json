@@ -1,0 +1,32 @@
+{
+  "source": "CDC Preventing Chronic Disease, 2023",
+  "url": "https://www.cdc.gov/pcd/issues/2023/23_0173.htm",
+  "findings": {
+    "strict_testing_rate_3yr_pct": 33.4,
+    "broad_testing_rate_3yr_pct": 74.3,
+    "study_period": "2016-2019",
+    "untested_overweight_obese": "At least 1 in 4 adults with overweight or obesity went untested in 3 years",
+    "obesity_vs_overweight_testing": "Higher testing rates among people with obesity than overweight",
+    "gender_disparity": "Men had 19% higher odds of screening than women",
+    "racial_disparity": "Black patients had higher screening rates than White patients (strict definition)",
+    "awareness_effect": "Adults aware of prediabetes were 2x+ as likely to pursue lifestyle goals",
+    "us_overweight_prevalence_pct": 31.1,
+    "us_obesity_prevalence_pct": 42.5,
+    "prevalence_data_source": "2017-2018 NHANES",
+    "uspstf_timeline": [
+      {
+        "year": 2008,
+        "recommendation": "Screen adults with sustained blood pressure >135/80 mmHg"
+      },
+      {
+        "year": 2015,
+        "recommendation": "Screen adults aged 40-70 with overweight or obesity"
+      },
+      {
+        "year": 2021,
+        "recommendation": "Lowered starting age to 35 for adults with overweight or obesity"
+      }
+    ],
+    "ada_recommendation": "Screen all adults 45+ every 3 years; overweight adults under 45 with additional risk factors (African American, Asian American, Latino, Native American, Pacific Islander)"
+  }
+}

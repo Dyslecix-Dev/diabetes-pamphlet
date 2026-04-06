@@ -1,0 +1,48 @@
+{
+  "source": "SEARCH for Diabetes in Youth Study",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10091237/",
+  "findings": {
+    "t1d_annual_increase_pct": 2.02,
+    "t1d_population": "0-19 year olds",
+    "t2d_annual_increase_pct": 5.31,
+    "t2d_population": "10-19 year olds",
+    "study_duration_years": 17,
+    "peak_diagnosis_age": {
+      "t1d_overall": 10,
+      "t1d_girls": 10,
+      "t1d_boys": 12,
+      "t1d_hispanic_asian_pi": 9,
+      "t1d_other_groups": "10-11",
+      "t2d_overall": 16,
+      "t2d_non_hispanic_black": 13
+    },
+    "seasonal_patterns": {
+      "t1d_peak_month": "January",
+      "t1d_explanation": "Winter peak linked to vitamin D fluctuation and viral infections",
+      "t2d_peak_month": "August",
+      "t2d_explanation": "Back-to-school physical exams detecting asymptomatic hyperglycemia"
+    },
+    "racial_ethnic_disparities": {
+      "highest_increase_groups": [
+        "Asian/Pacific Islander",
+        "Hispanic",
+        "Non-Hispanic Black"
+      ],
+      "comparison": "Annual percent increases for T1D and T2D were higher among racial and ethnic minority youth than non-Hispanic White youth"
+    },
+    "adult_contrast": {
+      "adult_incidence_change": -3.1,
+      "adult_period": "2007-2017",
+      "note": "Adult incidence declining while youth incidence rising — diverging trends"
+    },
+    "obesity_parallel": {
+      "youth_obesity_1999_pct": 13.9,
+      "youth_obesity_2016_pct": 18.5,
+      "highest_obesity_groups": "Non-Hispanic Black and Hispanic youth"
+    },
+    "diagnostic_accuracy": {
+      "t2d_gold_standard_2002_pct": 73,
+      "t2d_gold_standard_2016_pct": 84
+    }
+  }
+}
