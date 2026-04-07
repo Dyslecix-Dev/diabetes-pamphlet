@@ -10,7 +10,8 @@
       "Bash(pnpm format:*)",
       "Bash(git add:*)",
       "Bash(git commit -m 'Add prettier-plugin-astro and configure Prettier for Astro files:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(pnpm run:*)"
     ],
     "additionalDirectories": ["/Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/src/components"]
   }

@@ -61,12 +61,12 @@ This section exercises all core patterns: scrollama, GSAP animation, D3 chart, l
 
 Building this before Sections 3–4 because it exercises SVG interaction and the glucose slider — unique patterns.
 
-- [ ] Source or create `body-diagram.svg` with individually targetable organ paths
-- [ ] `BodyDiagram.tsx` — import SVG, highlight organs per scroll step using GSAP (fill color transitions)
-- [ ] `GlucoseSlider.tsx` — styled `<input type="range">` with color zones (green/orange/red). Show symptoms at each threshold. Fully keyboard-accessible.
-- [ ] `AmputationStats.tsx` — bar chart or annotated stat display using `complications.json`
-- [ ] Wire into `ScrollySection` with 11 narrative steps
-- [ ] Verify organ highlight accessibility (aria-labels per organ)
+- [x] Source or create `body-diagram.svg` with individually targetable organ paths
+- [x] `BodyDiagram.tsx` — import SVG, highlight organs per scroll step using GSAP (fill color transitions)
+- [x] `GlucoseSlider.tsx` — styled `<input type="range">` with color zones (green/orange/red). Show symptoms at each threshold. Fully keyboard-accessible.
+- [x] `AmputationStats.tsx` — bar chart or annotated stat display using `complications.json`
+- [x] Wire into `ScrollySection` with 11 narrative steps
+- [x] Verify organ highlight accessibility (aria-labels per organ)
 
 ## Phase 7: Section 3 — How Diabetes Develops
 
