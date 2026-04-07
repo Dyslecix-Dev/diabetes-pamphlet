@@ -90,6 +90,12 @@ function SectionThreeVisual({ currentStep }: { currentStep: number }) {
   return <ScreeningGap currentStep={currentStep} />;
 }
 
+function sectionThreeGroup(step: number) {
+  if (step <= 3) return "dayinlife";
+  if (step <= 5) return "risk";
+  return "screening";
+}
+
 export default function SectionThree() {
-  return <ScrollySection id="section-3" steps={steps} visualComponent={(currentStep) => <SectionThreeVisual currentStep={currentStep} />} />;
+  return <ScrollySection id="section-3" steps={steps} visualComponent={(currentStep) => <SectionThreeVisual currentStep={currentStep} />} visualGroup={sectionThreeGroup} />;
 }

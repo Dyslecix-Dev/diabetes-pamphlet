@@ -69,7 +69,7 @@ const organRegions: Record<string, { top: number; left: number; width: number; h
 
 export default function BodyDiagram({ currentStep }: BodyDiagramProps) {
   const reducedMotion = useReducedMotion();
-  const transition = reducedMotion ? "none" : "background-color 0.6s ease, opacity 0.6s ease";
+  const transition = reducedMotion ? "none" : "background-color 0.6s ease, opacity 0.6s ease, box-shadow 0.6s ease";
 
   const activeOrgans = currentStep === 8 || currentStep === 10 ? ["nerves", "legs", "eyes", "mouth", "kidneys", "heart"] : stepToOrgans[currentStep] || [];
 
@@ -80,6 +80,19 @@ export default function BodyDiagram({ currentStep }: BodyDiagramProps) {
 
   return (
     <div className="flex w-full flex-col items-center" role="img" aria-label="Human body diagram showing diabetes complications">
+      {/* Pulse animation for active organ highlights */}
+      {!reducedMotion && (
+        <style>{`
+          @keyframes organ-pulse {
+            0%, 100% { opacity: 0.55; }
+            50% { opacity: 0.8; }
+          }
+          .organ-active {
+            animation: organ-pulse 1.8s ease-in-out infinite;
+          }
+        `}</style>
+      )}
+
       {/* Active complication label */}
       <div className="mb-4 min-h-8 text-center" aria-live="polite">
         {currentStep >= 1 && currentStep <= 7 && activeOrgans.length > 0 && (
@@ -111,6 +124,7 @@ export default function BodyDiagram({ currentStep }: BodyDiagramProps) {
           return regions.map((region, i) => (
             <div
               key={`${organ}-${i}`}
+              className={isActive && !reducedMotion ? "organ-active" : undefined}
               style={{
                 position: "absolute",
                 top: `${region.top}%`,
@@ -119,11 +133,10 @@ export default function BodyDiagram({ currentStep }: BodyDiagramProps) {
                 height: `${region.height}%`,
                 borderRadius: region.borderRadius || "50%",
                 backgroundColor: color,
-                opacity: isActive ? 0.4 : 0,
-                mixBlendMode: "screen",
+                opacity: isActive ? 0.65 : 0,
                 pointerEvents: "none",
                 transition,
-                boxShadow: isActive ? `0 0 20px ${color}` : "none",
+                boxShadow: isActive ? `0 0 28px ${color}, 0 0 12px ${color}` : "none",
               }}
             />
           ));

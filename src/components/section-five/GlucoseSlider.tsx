@@ -1,5 +1,7 @@
-import { useId, useState } from "react";
+import { gsap } from "gsap";
+import { useEffect, useId, useRef, useState } from "react";
 import complicationsData from "../../data/complications.json";
+import { useReducedMotion } from "../../utils/a11y";
 
 const ranges = complicationsData.glucose_ranges_mg_dl;
 
@@ -20,39 +22,69 @@ function getZone(value: number) {
   return { label: "Diabetic", color: "var(--color-danger)", symptoms: null };
 }
 
-// Green 70-99, orange 100-125, red 126+, red below 70
+// Red <70, green 70-99, orange 100-125, red 126+
 function getGradient() {
-  // 30-300 range mapped: 30=0%, 300=100%
   const total = 270;
-  const pct = (v: number) => ((v - 30) / total) * 100;
+  const pct = (v: number) => `${((v - 30) / total) * 100}%`;
   return `linear-gradient(to right,
-    var(--color-danger) ${pct(30)}%,
-    var(--color-danger) ${pct(69)}%,
-    var(--color-success) ${pct(70)}%,
-    var(--color-success) ${pct(99)}%,
-    var(--color-orange) ${pct(100)}%,
-    var(--color-orange) ${pct(125)}%,
-    var(--color-danger) ${pct(126)}%,
-    var(--color-danger) ${pct(300)}%
+    #c0392b ${pct(30)},
+    #c0392b ${pct(69)},
+    #27ae60 ${pct(70)},
+    #27ae60 ${pct(99)},
+    #e67e22 ${pct(100)},
+    #e67e22 ${pct(125)},
+    #c0392b ${pct(126)},
+    #c0392b ${pct(300)}
   )`;
 }
 
 export default function GlucoseSlider() {
-  const [value, setValue] = useState(90);
+  const reducedMotion = useReducedMotion();
+  const [value, setValue] = useState(reducedMotion ? 90 : 30);
+  const [animating, setAnimating] = useState(!reducedMotion);
+  const animObj = useRef({ val: 30 });
   const zone = getZone(value);
   const sliderId = useId();
 
+  useEffect(() => {
+    if (reducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        onComplete: () => setAnimating(false),
+      });
+
+      // Sweep from 30 → 300
+      tl.to(animObj.current, {
+        val: 300,
+        duration: 1.5,
+        ease: "power2.inOut",
+        onUpdate: () => setValue(Math.round(animObj.current.val)),
+      });
+
+      // Then settle at 90
+      tl.to(animObj.current, {
+        val: 90,
+        duration: 1,
+        ease: "power2.out",
+        onUpdate: () => setValue(Math.round(animObj.current.val)),
+      });
+    });
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
   return (
-    <div className="mx-auto w-full max-w-md">
-      <h3 className="font-display mb-2 text-center text-xl" style={{ color: "var(--color-green-dark)" }}>
+    <div className="mx-auto w-full max-w-lg">
+      <h3 className="font-display mb-3 text-center text-2xl" style={{ color: "var(--color-green-dark)" }}>
         Blood Glucose Level
       </h3>
 
-      <div className="mb-4 text-center">
-        <span className="font-mono text-4xl font-bold" style={{ color: zone.color }} aria-live="polite">
+      <div className="mb-5 text-center">
+        <span className="font-mono text-5xl font-bold" style={{ color: zone.color }} aria-live="polite">
           {value}
         </span>
-        <span className="font-body ml-1 text-sm" style={{ color: "var(--color-text-muted)" }}>
+        <span className="font-body ml-1" style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
           mg/dL
         </span>
       </div>
@@ -60,37 +92,54 @@ export default function GlucoseSlider() {
       <label htmlFor={sliderId} className="sr-only">
         Adjust blood glucose level
       </label>
-      <input
-        id={sliderId}
-        type="range"
-        min={30}
-        max={300}
-        step={1}
-        value={value}
-        onChange={(e) => setValue(Number(e.target.value))}
-        className="h-3 w-full cursor-pointer appearance-none rounded-full"
-        style={{
-          background: getGradient(),
-          accentColor: zone.color,
-        }}
-        aria-valuemin={30}
-        aria-valuemax={300}
-        aria-valuenow={value}
-        aria-valuetext={`${value} mg/dL — ${zone.label}`}
-      />
+      <div className="relative">
+        {/* Gradient track */}
+        <div className="h-4 w-full rounded-full" style={{ background: getGradient() }} />
+        {/* Tall vertical bar marker */}
+        <div
+          className="pointer-events-none absolute top-1/2 -translate-x-1/2"
+          style={{
+            left: `${((value - 30) / 270) * 100}%`,
+            width: 4,
+            height: 40,
+            marginTop: -20,
+            background: "#1a1a2e",
+            borderRadius: 2,
+            boxShadow: "0 0 0 2px #fff, 0 2px 8px rgba(0,0,0,0.3)",
+            transition: "none",
+          }}
+        />
+        {/* Invisible range input on top for interaction */}
+        <input
+          id={sliderId}
+          type="range"
+          min={30}
+          max={300}
+          step={1}
+          value={value}
+          onChange={(e) => {
+            if (!animating) setValue(Number(e.target.value));
+          }}
+          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+          aria-valuemin={30}
+          aria-valuemax={300}
+          aria-valuenow={value}
+          aria-valuetext={`${value} mg/dL — ${zone.label}`}
+        />
+      </div>
 
-      {/* Zone labels */}
-      <div className="font-body mt-1 flex justify-between text-xs" style={{ color: "var(--color-text-muted)" }}>
-        <span>30</span>
-        <span>70</span>
-        <span>100</span>
-        <span>126</span>
-        <span>300</span>
+      {/* Zone labels — positioned at actual boundary percentages */}
+      <div className="font-body relative mt-2 h-5 text-sm" style={{ color: "var(--color-text-muted)" }}>
+        {[30, 70, 100, 126, 300].map((v) => (
+          <span key={v} className="absolute -translate-x-1/2" style={{ left: `${((v - 30) / 270) * 100}%` }}>
+            {v}
+          </span>
+        ))}
       </div>
 
       {/* Current zone */}
-      <div className="mt-4 rounded-lg p-4 text-center" style={{ backgroundColor: zone.color + "18", border: `2px solid ${zone.color}` }}>
-        <p className="font-body text-lg font-semibold" style={{ color: zone.color }}>
+      <div className="mt-5 rounded-lg p-5 text-center" style={{ backgroundColor: zone.color + "18", border: `2px solid ${zone.color}` }}>
+        <p className="font-body text-xl font-semibold" style={{ color: zone.color }}>
           {zone.label}
         </p>
         {zone.symptoms && (

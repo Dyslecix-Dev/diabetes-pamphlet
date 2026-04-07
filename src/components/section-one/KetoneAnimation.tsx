@@ -94,7 +94,7 @@ export default function KetoneAnimation({ currentStep }: KetoneAnimationProps) {
 
   if (currentStep === 3) {
     return (
-      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label="A single ketone body produced as the body burns fat for fuel">
+      <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img" aria-label="A single ketone body produced as the body burns fat for fuel">
         {/* Fat droplet source */}
         <ellipse cx={90} cy={180} rx={40} ry={52} fill="#fde68a" stroke="#f59e0b" strokeWidth="2" opacity={0.9} />
         <text x={90} y={173} textAnchor="middle" fontSize="20" aria-hidden="true">
@@ -107,9 +107,6 @@ export default function KetoneAnimation({ currentStep }: KetoneAnimationProps) {
         {/* Arrow */}
         <line x1={140} y1={180} x2={210} y2={180} stroke="var(--color-text-muted)" strokeWidth="2" strokeDasharray="5 3" />
         <polygon points="210,175 220,180 210,185" fill="var(--color-text-muted)" />
-        <text x={178} y={170} textAnchor="middle" fontSize="8" fill="var(--color-text-muted)" fontFamily="var(--font-body)">
-          burned for fuel
-        </text>
 
         {/* Single ketone */}
         <g ref={groupRef} opacity={reducedMotion ? 1 : 0}>
@@ -129,7 +126,7 @@ export default function KetoneAnimation({ currentStep }: KetoneAnimationProps) {
 
   // Step 4: pile
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-sm" role="img" aria-label="Ketone bodies piling up in the bloodstream, causing diabetic ketoacidosis">
+    <svg viewBox={`0 0 ${W} ${H}`} className="mx-auto w-full max-w-md" role="img" aria-label="Ketone bodies piling up in the bloodstream, causing diabetic ketoacidosis">
       <g ref={pileRef}>
         {PILE.map((pos, i) => (
           <g key={i} className="ketone-pile-icon" opacity={reducedMotion ? 1 : 0}>

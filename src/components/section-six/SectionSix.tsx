@@ -62,6 +62,11 @@ function SectionSixVisual({ currentStep }: { currentStep: number }) {
   return <ClosingCTA />;
 }
 
+function sectionSixGroup(step: number) {
+  if (step <= 4) return "timeline";
+  return "cta";
+}
+
 export default function SectionSix() {
-  return <ScrollySection id="section-6" steps={steps} visualComponent={(currentStep) => <SectionSixVisual currentStep={currentStep} />} />;
+  return <ScrollySection id="section-6" steps={steps} visualComponent={(currentStep) => <SectionSixVisual currentStep={currentStep} />} visualGroup={sectionSixGroup} trailingSpacer={false} />;
 }

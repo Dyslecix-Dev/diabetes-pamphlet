@@ -3,6 +3,7 @@ import DiagnosisCounter from "./DiagnosisCounter";
 import GlucoseAnimation from "./GlucoseAnimation";
 import KetoneAnimation from "./KetoneAnimation";
 import PrevalenceChart from "./PrevalenceChart";
+import SodaBottle from "./SodaBottle";
 
 const steps: ScrollStep[] = [
   {
@@ -63,8 +64,12 @@ function SectionOneVisual({ currentStep }: { currentStep: number }) {
   // Step 5: death ranking stat (text-based)
   // Step 6: Prevalence chart
   // Step 7: Live counter
-  if (currentStep <= 2) {
+  if (currentStep <= 1) {
     return <GlucoseAnimation currentStep={currentStep} />;
+  }
+
+  if (currentStep === 2) {
+    return <SodaBottle currentStep={currentStep} />;
   }
 
   if (currentStep === 3 || currentStep === 4) {
@@ -74,10 +79,10 @@ function SectionOneVisual({ currentStep }: { currentStep: number }) {
   if (currentStep === 5) {
     return (
       <div className="text-center">
-        <div className="font-display text-7xl font-bold" style={{ color: "var(--color-danger)" }}>
+        <div className="font-display text-8xl font-bold" style={{ color: "var(--color-danger)" }}>
           #7
         </div>
-        <p className="mt-3 text-lg" style={{ color: "var(--color-text-muted)" }}>
+        <p className="mt-4 text-xl" style={{ color: "var(--color-text-muted)" }}>
           leading cause of death in the US
         </p>
       </div>
@@ -91,6 +96,15 @@ function SectionOneVisual({ currentStep }: { currentStep: number }) {
   return <DiagnosisCounter />;
 }
 
+function sectionOneGroup(step: number) {
+  if (step <= 1) return "glucose";
+  if (step === 2) return "soda";
+  if (step <= 4) return "ketone";
+  if (step === 5) return "stat";
+  if (step === 6) return "prevalence";
+  return "counter";
+}
+
 export default function SectionOne() {
-  return <ScrollySection id="section-1" steps={steps} visualComponent={(currentStep) => <SectionOneVisual currentStep={currentStep} />} />;
+  return <ScrollySection id="section-1" steps={steps} visualComponent={(currentStep) => <SectionOneVisual currentStep={currentStep} />} visualGroup={sectionOneGroup} />;
 }

@@ -96,6 +96,12 @@ function SectionTwoVisual({ currentStep }: { currentStep: number }) {
   return <PopulationSplit currentStep={currentStep} />;
 }
 
+function sectionTwoGroup(step: number) {
+  if (step <= 2) return "comparison";
+  if (step >= 7 && step <= 8) return "youth";
+  return "population";
+}
+
 export default function SectionTwo() {
-  return <ScrollySection id="section-2" steps={steps} visualComponent={(currentStep) => <SectionTwoVisual currentStep={currentStep} />} />;
+  return <ScrollySection id="section-2" steps={steps} visualComponent={(currentStep) => <SectionTwoVisual currentStep={currentStep} />} visualGroup={sectionTwoGroup} />;
 }

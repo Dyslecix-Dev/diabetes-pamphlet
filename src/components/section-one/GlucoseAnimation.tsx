@@ -86,7 +86,7 @@ export default function GlucoseAnimation({ currentStep }: GlucoseAnimationProps)
   const ringPath = RING_POINTS.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ") + " Z";
 
   return (
-    <svg ref={svgRef} viewBox="0 0 400 360" className="mx-auto w-full max-w-sm" role="img" aria-label={`Glucose molecule illustration — ${getAriaDescription(currentStep)}`}>
+    <svg ref={svgRef} viewBox="0 0 400 360" className="mx-auto w-full max-w-md" role="img" aria-label={`Glucose molecule illustration — ${getAriaDescription(currentStep)}`}>
       {/* Ring bonds */}
       {RING_POINTS.map((point, i) => {
         const next = RING_POINTS[(i + 1) % RING_POINTS.length];

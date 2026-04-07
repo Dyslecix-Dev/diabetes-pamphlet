@@ -47,8 +47,6 @@ const CELLS = [{ cx: 42 }, { cx: 122 }, { cx: 202 }, { cx: 282 }];
 // Glucose dot x positions
 const GLUCOSE_X_CLUSTERED = [68, 82, 96, 74, 88, 78];
 const GLUCOSE_X_SPREAD = [48, 88, 128, 172, 212, 256];
-const GLUCOSE_X_EXCESS = [38, 72, 106, 146, 182, 218, 256, 294];
-
 // ─── Sub-components ──────────────────────────────────────────────────────────
 
 function FlowArrow({ x, y1, y2, color = "var(--color-text-muted)" }: { x: number; y1: number; y2: number; color?: string }) {
@@ -129,7 +127,7 @@ function Bloodstream({ step }: { step: number }) {
   return (
     <g>
       {/* Label above the band */}
-      <text x={10} y={BLOOD_Y1 - 6} fontSize="8" fill={danger ? "var(--color-danger)" : "var(--color-orange)"} fontFamily="var(--font-body)" fontWeight="600">
+      <text x={140} y={BLOOD_Y1 - 6} fontSize="8" fill={danger ? "var(--color-danger)" : "var(--color-orange)"} fontFamily="var(--font-body)" fontWeight="600">
         bloodstream
       </text>
       <rect x={0} y={BLOOD_Y1} width={W} height={BLOOD_Y2 - BLOOD_Y1} fill={danger ? "#fde8e8" : "#fde8c0"} opacity={0.65} rx={4} />
@@ -137,42 +135,60 @@ function Bloodstream({ step }: { step: number }) {
   );
 }
 
+/**
+ * 6 dots total. All steps render 6 circles with stable keys.
+ * Step 0: clustered near stomach
+ * Step 1: spread across bloodstream
+ * Step 2: 4 slide down into cells, 2 remain in bloodstream
+ * Step 3: all 6 return to bloodstream (excess glucose)
+ */
 function GlucoseDots({ step, animated }: { step: number; animated: boolean }) {
-  let xPositions: number[];
-  let color: string;
-  let showPileLabel: boolean;
+  const trans = animated ? "all 0.8s ease" : "none";
 
-  if (step === 0) {
-    xPositions = GLUCOSE_X_CLUSTERED;
-    color = "var(--color-orange)";
-    showPileLabel = false;
-  } else if (step === 1) {
-    xPositions = GLUCOSE_X_SPREAD;
-    color = "var(--color-orange)";
-    showPileLabel = false;
-  } else if (step === 2) {
-    xPositions = GLUCOSE_X_SPREAD.slice(0, 2);
-    color = "var(--color-orange)";
-    showPileLabel = false;
-  } else {
-    xPositions = GLUCOSE_X_EXCESS;
-    color = "var(--color-danger)";
-    showPileLabel = true;
-  }
+  // Compute each dot's position per step
+  const dots = Array.from({ length: 6 }, (_, i) => {
+    let cx: number;
+    let cy: number;
+    let color = "var(--color-orange)";
+    let opacity = 0.88;
+
+    if (step === 0) {
+      cx = GLUCOSE_X_CLUSTERED[i];
+      cy = BLOOD_MID;
+    } else if (step === 1) {
+      cx = GLUCOSE_X_SPREAD[i];
+      cy = BLOOD_MID;
+    } else if (step === 2) {
+      // First 4 dots move into cells, last 2 stay in bloodstream
+      if (i < 4) {
+        cx = CELLS[i].cx;
+        cy = CELL_CY;
+        opacity = 0.8;
+      } else {
+        cx = GLUCOSE_X_SPREAD[i];
+        cy = BLOOD_MID;
+      }
+    } else {
+      // Step 3: all back in bloodstream, danger color
+      cx = GLUCOSE_X_SPREAD[i] ?? GLUCOSE_X_SPREAD[i % GLUCOSE_X_SPREAD.length];
+      cy = BLOOD_MID;
+      color = "var(--color-danger)";
+    }
+
+    return { cx, cy, color, opacity };
+  });
+
+  const extras: typeof dots = [];
 
   return (
     <g>
-      {xPositions.map((x, i) => (
-        <g key={i} style={{ transition: animated ? "cx 0.6s ease, fill 0.4s ease" : "none" }}>
-          <circle cx={x} cy={BLOOD_MID} r={6} fill={color} opacity={0.88} />
-          {i === 0 && (
-            <text x={x} y={BLOOD_MID + 4} textAnchor="middle" fontSize="6" fill="white" fontWeight="bold" aria-hidden="true">
-              G
-            </text>
-          )}
-        </g>
+      {dots.map((d, i) => (
+        <circle key={`gd-${i}`} cx={d.cx} cy={d.cy} r={6} fill={d.color} opacity={d.opacity} style={{ transition: trans }} />
       ))}
-      {showPileLabel && (
+      {extras.map((d, i) => (
+        <circle key={`extra-${i}`} cx={d.cx} cy={d.cy} r={6} fill={d.color} opacity={animated ? d.opacity : d.opacity} style={{ transition: trans }} />
+      ))}
+      {step === 3 && (
         <text x={W / 2} y={BLOOD_Y2 + 16} textAnchor="middle" fontSize="8.5" fill="var(--color-danger)" fontFamily="var(--font-body)" fontWeight="700">
           ↑ glucose piling up — can't get into cells
         </text>

@@ -22,13 +22,18 @@ const T1D_COUNT = 7;
 // 33 figures spread evenly across the grid to represent "1 in 3 adults has prediabetes"
 const PREDIABETES_INDICES = new Set(Array.from({ length: 33 }, (_, i) => i * 3 + 1));
 
+// Hardcoded hex values so SVG fill transitions actually animate
+const COLOR_ORANGE = "#e67e22";
+const COLOR_GREEN = "#628141";
+const COLOR_CREAM = "#e5d9b6";
+
 function getFigureColor(index: number, currentStep: number): string {
   const showT1 = currentStep >= 3;
   const showT2 = currentStep >= 5;
 
-  if (index < T1D_COUNT && showT1) return "var(--color-orange)";
-  if (index >= T1D_COUNT && showT2) return "var(--color-green-mid)";
-  return "var(--color-cream)";
+  if (index < T1D_COUNT && showT1) return COLOR_ORANGE;
+  if (index >= T1D_COUNT && showT2) return COLOR_GREEN;
+  return COLOR_CREAM;
 }
 
 export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
@@ -47,10 +52,15 @@ export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
 
   const showT1 = currentStep >= 3;
   const showT2 = currentStep >= 5;
+  const slideUp = (show: boolean, delay = "0s") => ({
+    opacity: show ? 1 : 0,
+    transform: show ? "translateY(0)" : "translateY(14px)",
+    transition: reducedMotion ? "none" : `opacity 0.6s ease ${delay}, transform 0.6s ease ${delay}`,
+  });
 
   return (
     <div>
-      {!reducedMotion && showPrediabetes && (
+      {!reducedMotion && (
         <style>{`
           @keyframes prediabetes-pulse {
             0%, 100% { opacity: 0.3; r: 13; }
@@ -64,7 +74,7 @@ export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
 
       <svg
         viewBox={`0 0 ${SVG_W} ${SVG_H}`}
-        className="w-full"
+        className="mx-auto w-full max-w-sm"
         role="img"
         aria-label={
           showT2
@@ -77,49 +87,54 @@ export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
         {figures.map(({ index, x, y }) => {
           const color = getFigureColor(index, currentStep);
           const isPrediabetes = showPrediabetes && PREDIABETES_INDICES.has(index);
+          // Green (T2) figures fade in
+          const isT2Entering = index >= T1D_COUNT && showT2;
           return (
-            <g
-              key={index}
-              transform={`translate(${x}, ${y}) scale(${ICON_SIZE / 24})`}
-              style={{
-                transition: reducedMotion ? "none" : "fill 0.4s ease",
-              }}
-            >
+            <g key={index} transform={`translate(${x}, ${y}) scale(${ICON_SIZE / 24})`}>
               {isPrediabetes && <circle cx={12} cy={12} r={13} fill="none" stroke="var(--color-danger)" strokeWidth="1.5" className={reducedMotion ? undefined : "prediabetes-ring"} />}
-              <path d={PERSON_PATH} fill={color} />
+              <path
+                d={PERSON_PATH}
+                fill={color}
+                style={{
+                  transition: reducedMotion ? "none" : "fill 0.6s ease",
+                  transitionDelay: isT2Entering && !reducedMotion ? `${(index - T1D_COUNT) * 0.012}s` : "0s",
+                }}
+              />
             </g>
           );
         })}
       </svg>
 
       {/* Legend */}
-      <div className="mt-3 flex flex-wrap gap-4 text-sm" style={{ color: "var(--color-text-muted)" }}>
-        {showT1 && (
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-3 w-3 rounded-sm" style={{ background: "var(--color-orange)" }} />
-            Type 1 (5–10%)
-          </span>
-        )}
-        {showT2 && (
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-3 w-3 rounded-sm" style={{ background: "var(--color-green-mid)" }} />
-            Type 2 (90–95%)
-          </span>
-        )}
+      <div className="mt-4 ml-32 flex flex-wrap gap-5" style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
+        <span className="flex items-center gap-1.5" style={slideUp(showT1)}>
+          <span className="inline-block h-3.5 w-3.5 rounded-sm" style={{ background: "var(--color-orange)" }} />
+          Type 1 (5–10%)
+        </span>
+        <span className="flex items-center gap-1.5" style={slideUp(showT2, "0.2s")}>
+          <span className="inline-block h-3.5 w-3.5 rounded-sm" style={{ background: "var(--color-green-mid)" }} />
+          Type 2 (90–95%)
+        </span>
         {showPrediabetes && (
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-3 w-3 rounded-sm border" style={{ background: "transparent", borderColor: "var(--color-danger)" }} />
+          <span className="flex items-center gap-1.5" style={slideUp(showPrediabetes, "0.1s")}>
+            <span className="inline-block h-3.5 w-3.5 rounded-sm border" style={{ background: "transparent", borderColor: "var(--color-danger)" }} />
             Prediabetes risk (1 in 3)
           </span>
         )}
       </div>
 
       {/* Prediabetes callout */}
-      {showPrediabetes && (
-        <p className="mt-2 rounded-md px-3 py-2 text-sm font-medium" style={{ background: "var(--color-danger-15)", color: "var(--color-danger)" }}>
-          1 in 3 US adults has prediabetes — most don't know it.
-        </p>
-      )}
+      <div
+        className="mt-3 rounded-md px-4 py-3 font-medium"
+        style={{
+          background: "var(--color-danger-15)",
+          color: "var(--color-danger)",
+          fontSize: "0.95rem",
+          ...slideUp(showPrediabetes, "0.3s"),
+        }}
+      >
+        {showPrediabetes ? "1 in 3 US adults has prediabetes — most don't know it." : "\u00A0"}
+      </div>
     </div>
   );
 }

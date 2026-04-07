@@ -106,6 +106,12 @@ function SectionFiveVisual({ currentStep }: { currentStep: number }) {
   return <BodyDiagram currentStep={currentStep} />;
 }
 
+function sectionFiveGroup(step: number) {
+  if (step === 3) return "amputation";
+  if (step === 9) return "slider";
+  return "body";
+}
+
 export default function SectionFive() {
-  return <ScrollySection id="section-5" steps={steps} visualComponent={(currentStep) => <SectionFiveVisual currentStep={currentStep} />} />;
+  return <ScrollySection id="section-5" steps={steps} visualComponent={(currentStep) => <SectionFiveVisual currentStep={currentStep} />} visualGroup={sectionFiveGroup} />;
 }

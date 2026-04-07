@@ -99,6 +99,13 @@ function SectionFourVisual({ currentStep }: { currentStep: number }) {
   return <TreatmentTimeline activeStage={activeStage} />;
 }
 
+function sectionFourGroup(step: number) {
+  if (step === 0) return "intro";
+  if (step <= 4) return "plate";
+  if (step === 5) return "fiber";
+  return "treatment";
+}
+
 export default function SectionFour() {
-  return <ScrollySection id="section-4" steps={steps} visualComponent={(currentStep) => <SectionFourVisual currentStep={currentStep} />} />;
+  return <ScrollySection id="section-4" steps={steps} visualComponent={(currentStep) => <SectionFourVisual currentStep={currentStep} />} visualGroup={sectionFourGroup} />;
 }

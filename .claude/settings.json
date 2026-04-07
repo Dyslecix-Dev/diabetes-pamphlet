@@ -14,7 +14,8 @@
       "Bash(pnpm run:*)",
       "Bash(pnpm list:*)",
       "Bash(identify /Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/public/images/body-diagram.png)",
-      "Bash(sips -g pixelWidth -g pixelHeight /Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/public/images/body-diagram.png)"
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/public/images/body-diagram.png)",
+      "Bash(pnpm dev:*)"
     ],
     "additionalDirectories": ["/Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/src/components"]
   }

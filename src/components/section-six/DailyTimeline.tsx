@@ -121,14 +121,14 @@ export default function DailyTimeline({ isActive = false }: { isActive?: boolean
   return (
     <div className="flex flex-col items-center gap-4" role="figure" aria-label="24-hour glucose timeline with interactive scenarios">
       {/* Scenario toggles */}
-      <div className="flex flex-wrap justify-center gap-2" role="radiogroup" aria-label="Glucose scenario selector">
+      <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Glucose scenario selector" style={{ maxWidth: "20rem" }}>
         {SCENARIOS.map((s) => (
           <button
             key={s.id}
             onClick={() => setScenario(s.id)}
             role="radio"
             aria-checked={scenario === s.id}
-            className="font-body min-h-11 rounded-full px-3 py-2 text-sm transition-colors"
+            className="font-body min-h-11 rounded-lg px-3 py-2 text-sm transition-colors"
             style={{
               backgroundColor: scenario === s.id ? "var(--color-green-mid)" : "var(--color-cream)",
               color: scenario === s.id ? "#fff" : "var(--color-text)",

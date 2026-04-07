@@ -1,3 +1,5 @@
+import { useReducedMotion } from "../../utils/a11y";
+
 interface TypeComparisonProps {
   currentStep: number;
 }
@@ -31,19 +33,36 @@ const cards: TypeCard[] = [
 ];
 
 export default function TypeComparison({ currentStep }: TypeComparisonProps) {
-  // Show T1 card from step 1, T2 card from step 4
+  const reducedMotion = useReducedMotion();
   const showT1 = currentStep >= 1;
   const showT2 = currentStep >= 1;
 
   return (
     <div className="flex flex-col gap-4" role="list" aria-label="Comparison of Type 1 and Type 2 diabetes">
+      {!reducedMotion && (
+        <style>{`
+          @keyframes card-glow-orange {
+            0%, 100% { box-shadow: 0 2px 8px rgba(230, 126, 34, 0.08); }
+            50% { box-shadow: 0 4px 24px 4px rgba(230, 126, 34, 0.3); }
+          }
+          @keyframes card-glow-green {
+            0%, 100% { box-shadow: 0 2px 8px rgba(98, 129, 65, 0.08); }
+            50% { box-shadow: 0 4px 24px 4px rgba(98, 129, 65, 0.3); }
+          }
+          .card-idle-orange { animation: card-glow-orange 3s ease-in-out infinite; }
+          .card-idle-green { animation: card-glow-green 3s ease-in-out 1.5s infinite; }
+        `}</style>
+      )}
+
       {cards.map((card, i) => {
         const visible = i === 0 ? showT1 : showT2;
+        const idleClass = !reducedMotion ? (i === 0 ? "card-idle-orange" : "card-idle-green") : undefined;
+
         return (
           <div
             key={card.type}
             role="listitem"
-            className="rounded-lg border-l-4 p-4"
+            className={`rounded-lg border-l-4 p-4 ${idleClass ?? ""}`}
             style={{
               borderColor: card.color,
               background: "var(--color-bg)",
