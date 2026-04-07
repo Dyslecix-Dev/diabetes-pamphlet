@@ -77,10 +77,10 @@ Building this before Sections 3–4 because it exercises SVG interaction and the
 
 ## Phase 8: Section 4 — Treatments
 
-- [ ] `PlateBuilder.tsx` — interactive drag-and-drop plate. Food item SVGs with categories. Live fiber/glycemic meter. Keyboard alternative (select menu or arrow keys). This is the most complex interactive — budget extra time.
-- [ ] `FiberMeter.tsx` — animated glucose curve comparison: with fiber (smooth) vs without (spiky)
-- [ ] `TreatmentTimeline.tsx` — visual spectrum: lifestyle → medication → insulin
-- [ ] Wire into `ScrollySection` with 8 narrative steps
+- [x] `PlateBuilder.tsx` — interactive drag-and-drop plate. Food item SVGs with categories. Live fiber/glycemic meter. Keyboard alternative (select menu or arrow keys). This is the most complex interactive — budget extra time.
+- [x] `FiberMeter.tsx` — animated glucose curve comparison: with fiber (smooth) vs without (spiky)
+- [x] `TreatmentTimeline.tsx` — visual spectrum: lifestyle → medication → insulin
+- [x] Wire into `ScrollySection` with 8 narrative steps
 
 ## Phase 9: Section 6 — Living with Diabetes
 
