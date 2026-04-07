@@ -8,13 +8,14 @@ interface RiskFactorVizProps {
 const overweightPct = screeningData.findings.us_overweight_prevalence_pct;
 const obesityPct = screeningData.findings.us_obesity_prevalence_pct;
 const combinedPct = overweightPct + obesityPct;
+const normalPct = parseFloat((100 - combinedPct).toFixed(1));
 
 export default function RiskFactorViz({ isActive }: RiskFactorVizProps) {
   const reducedMotion = useReducedMotion();
   const transition = reducedMotion ? "none" : "all 0.6s ease";
 
   return (
-    <div role="figure" aria-label={`US adult weight statistics: ${overweightPct}% overweight, ${obesityPct}% obese`}>
+    <div role="figure" aria-label={`US adult weight statistics: ${normalPct}% normal weight, ${overweightPct}% overweight, ${obesityPct}% obese`}>
       <h3 className="font-display mb-4 text-center text-xl" style={{ color: "var(--color-green-dark)" }}>
         US Adult Weight Prevalence
       </h3>
@@ -22,6 +23,17 @@ export default function RiskFactorViz({ isActive }: RiskFactorVizProps) {
       {/* Stacked bar */}
       <div className="mx-auto max-w-xs">
         <div className="flex h-12 overflow-hidden rounded-lg" style={{ background: "var(--color-cream)" }}>
+          {/* Normal weight segment */}
+          <div
+            className="flex items-center justify-center text-sm font-bold text-black"
+            style={{
+              width: isActive ? `${normalPct}%` : "0%",
+              background: "var(--color-cream)",
+              transition,
+            }}
+          >
+            {isActive && `${normalPct}%`}
+          </div>
           {/* Overweight segment */}
           <div
             className="flex items-center justify-center text-sm font-bold text-white"
@@ -50,12 +62,16 @@ export default function RiskFactorViz({ isActive }: RiskFactorVizProps) {
         {/* Legend */}
         <div className="mt-3 flex justify-center gap-4 text-sm" style={{ color: "var(--color-text-muted)" }}>
           <span className="flex items-center gap-1.5">
+            <span className="inline-block h-3 w-3 rounded-sm border" style={{ background: "var(--color-cream)" }} />
+            Normal
+          </span>
+          <span className="flex items-center gap-1.5">
             <span className="inline-block h-3 w-3 rounded-sm" style={{ background: "var(--color-orange)" }} />
-            Overweight ({overweightPct}%)
+            Overweight
           </span>
           <span className="flex items-center gap-1.5">
             <span className="inline-block h-3 w-3 rounded-sm" style={{ background: "var(--color-danger)" }} />
-            Obese ({obesityPct}%)
+            Obese
           </span>
         </div>
 
@@ -77,6 +93,10 @@ export default function RiskFactorViz({ isActive }: RiskFactorVizProps) {
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>Normal weight</td>
+            <td>{normalPct}</td>
+          </tr>
           <tr>
             <td>Overweight</td>
             <td>{overweightPct}</td>

@@ -22,35 +22,57 @@ const stepToOrgans: Record<number, string[]> = {
 };
 
 const organColors = {
-  neutral: "var(--color-cream)",
+  neutral: "transparent",
   highlight: "var(--color-orange)",
   danger: "var(--color-danger)",
   healthy: "var(--color-success)",
 };
 
-function getOrganFill(organ: string, currentStep: number, reducedMotion: boolean) {
+function getOrganColor(organ: string, currentStep: number) {
   if (currentStep === 10) return organColors.healthy;
   if (currentStep === 8) return organColors.danger;
-
   const activeOrgans = stepToOrgans[currentStep] || [];
   if (activeOrgans.includes(organ)) return organColors.highlight;
   return organColors.neutral;
 }
 
-function getTransition(reducedMotion: boolean) {
-  return reducedMotion ? "none" : "fill 0.6s ease, opacity 0.6s ease";
-}
+/**
+ * Organ overlay regions — positioned as percentages of the image (1024x1820).
+ * Each region is a box: [top%, left%, width%, height%]
+ */
+const organRegions: Record<string, { top: number; left: number; width: number; height: number; borderRadius?: string }[]> = {
+  eyes: [
+    { top: 6, left: 43, width: 6, height: 3, borderRadius: "50%" },
+    { top: 6, left: 50, width: 6, height: 3, borderRadius: "50%" },
+  ],
+  mouth: [{ top: 11, left: 44, width: 10, height: 3.5, borderRadius: "50%" }],
+  heart: [{ top: 22, left: 38, width: 24, height: 12, borderRadius: "30%" }],
+  kidneys: [
+    { top: 42, left: 34, width: 14, height: 8, borderRadius: "40%" },
+    { top: 42, left: 51, width: 14, height: 8, borderRadius: "40%" },
+  ],
+  legs: [
+    { top: 55, left: 34, width: 11, height: 40, borderRadius: "8px" },
+    { top: 55, left: 54, width: 11, height: 40, borderRadius: "8px" },
+  ],
+  nerves: [
+    // Hands
+    { top: 51, left: 14, width: 10, height: 5, borderRadius: "50%" },
+    { top: 51, left: 76, width: 10, height: 5, borderRadius: "50%" },
+    // Spine region
+    { top: 14, left: 44, width: 12, height: 30, borderRadius: "8px" },
+    // Feet
+    { top: 88, left: 28, width: 16, height: 8, borderRadius: "50%" },
+    { top: 88, left: 56, width: 16, height: 8, borderRadius: "50%" },
+  ],
+};
 
-// Simplified body outline with individually targetable organ regions
-// Positioned to overlay meaningful areas of a human body silhouette
 export default function BodyDiagram({ currentStep }: BodyDiagramProps) {
   const reducedMotion = useReducedMotion();
-  const transition = getTransition(reducedMotion);
+  const transition = reducedMotion ? "none" : "background-color 0.6s ease, opacity 0.6s ease";
 
-  const activeOrgans =
-    currentStep === 8 ? ["nerves", "legs", "eyes", "mouth", "kidneys", "heart"] : currentStep === 10 ? ["nerves", "legs", "eyes", "mouth", "kidneys", "heart"] : stepToOrgans[currentStep] || [];
+  const activeOrgans = currentStep === 8 || currentStep === 10 ? ["nerves", "legs", "eyes", "mouth", "kidneys", "heart"] : stepToOrgans[currentStep] || [];
 
-  // Find the complication label for an organ
   const getLabel = (organ: string) => {
     const item = complicationsData.complications_list.find((c) => c.organ === organ);
     return item ? item.label : organ;
@@ -61,7 +83,7 @@ export default function BodyDiagram({ currentStep }: BodyDiagramProps) {
       {/* Active complication label */}
       <div className="mb-4 min-h-8 text-center" aria-live="polite">
         {currentStep >= 1 && currentStep <= 7 && activeOrgans.length > 0 && (
-          <p className="font-body text-lg font-semibold" style={{ color: currentStep === 8 ? "var(--color-danger)" : "var(--color-orange)" }}>
+          <p className="font-body text-lg font-semibold" style={{ color: "var(--color-warning)" }}>
             {activeOrgans.map(getLabel).join(" · ")}
           </p>
         )}
@@ -77,80 +99,38 @@ export default function BodyDiagram({ currentStep }: BodyDiagramProps) {
         )}
       </div>
 
-      <svg viewBox="0 0 300 520" width="100%" height="100%" className="max-w-70 lg:max-w-[320px]" aria-hidden="true">
-        {/* Body silhouette */}
-        <g id="body-outline" fill="none" stroke="var(--color-text-primary)" strokeWidth="1.5" opacity="0.3">
-          {/* Head */}
-          <ellipse cx="150" cy="52" rx="35" ry="42" />
-          {/* Neck */}
-          <rect x="138" y="90" width="24" height="20" rx="4" />
-          {/* Torso */}
-          <path d="M100,110 Q90,110 85,130 L75,240 Q72,260 90,270 L120,280 L150,285 L180,280 L210,270 Q228,260 225,240 L215,130 Q210,110 200,110 Z" />
-          {/* Left arm */}
-          <path d="M85,130 Q60,140 45,190 L35,250 Q30,270 40,275" />
-          {/* Right arm */}
-          <path d="M215,130 Q240,140 255,190 L265,250 Q270,270 260,275" />
-          {/* Left leg */}
-          <path d="M110,280 L100,370 L95,440 L90,510" />
-          <path d="M140,285 L130,370 L125,440 L120,510" />
-          {/* Right leg */}
-          <path d="M160,285 L170,370 L175,440 L180,510" />
-          <path d="M190,280 L200,370 L205,440 L210,510" />
-        </g>
+      {/* Body diagram with overlay highlights */}
+      <div className="relative w-full max-w-56 lg:max-w-65" style={{ aspectRatio: "1024 / 1820" }}>
+        <img src="/images/body-diagram.png" alt="" aria-hidden="true" className="block h-full w-full object-contain" draggable={false} />
 
-        {/* === Targetable organ regions === */}
+        {/* Organ highlight overlays */}
+        {Object.entries(organRegions).map(([organ, regions]) => {
+          const color = getOrganColor(organ, currentStep);
+          const isActive = activeOrgans.includes(organ);
 
-        {/* Eyes */}
-        <g id="eyes-path" role="img" aria-label={getLabel("eyes")}>
-          <ellipse cx="136" cy="45" rx="9" ry="6" fill={getOrganFill("eyes", currentStep, reducedMotion)} opacity={activeOrgans.includes("eyes") ? 0.85 : 0.2} style={{ transition }} />
-          <ellipse cx="164" cy="45" rx="9" ry="6" fill={getOrganFill("eyes", currentStep, reducedMotion)} opacity={activeOrgans.includes("eyes") ? 0.85 : 0.2} style={{ transition }} />
-        </g>
+          return regions.map((region, i) => (
+            <div
+              key={`${organ}-${i}`}
+              style={{
+                position: "absolute",
+                top: `${region.top}%`,
+                left: `${region.left}%`,
+                width: `${region.width}%`,
+                height: `${region.height}%`,
+                borderRadius: region.borderRadius || "50%",
+                backgroundColor: color,
+                opacity: isActive ? 0.4 : 0,
+                mixBlendMode: "screen",
+                pointerEvents: "none",
+                transition,
+                boxShadow: isActive ? `0 0 20px ${color}` : "none",
+              }}
+            />
+          ));
+        })}
+      </div>
 
-        {/* Mouth */}
-        <g id="mouth-path" role="img" aria-label={getLabel("mouth")}>
-          <ellipse cx="150" cy="70" rx="14" ry="7" fill={getOrganFill("mouth", currentStep, reducedMotion)} opacity={activeOrgans.includes("mouth") ? 0.85 : 0.2} style={{ transition }} />
-        </g>
-
-        {/* Heart */}
-        <g id="heart-path" role="img" aria-label={getLabel("heart")}>
-          <path
-            d="M160,155 C160,140 145,135 140,145 C135,135 120,140 120,155 C120,175 140,185 140,185 C140,185 160,175 160,155 Z"
-            fill={getOrganFill("heart", currentStep, reducedMotion)}
-            opacity={activeOrgans.includes("heart") ? 0.85 : 0.2}
-            style={{ transition }}
-          />
-        </g>
-
-        {/* Kidneys */}
-        <g id="kidneys-path" role="img" aria-label={getLabel("kidneys")}>
-          <ellipse cx="120" cy="210" rx="16" ry="22" fill={getOrganFill("kidneys", currentStep, reducedMotion)} opacity={activeOrgans.includes("kidneys") ? 0.85 : 0.2} style={{ transition }} />
-          <ellipse cx="180" cy="210" rx="16" ry="22" fill={getOrganFill("kidneys", currentStep, reducedMotion)} opacity={activeOrgans.includes("kidneys") ? 0.85 : 0.2} style={{ transition }} />
-        </g>
-
-        {/* Nerves — shown as dots along extremities */}
-        <g id="nerves-path" role="img" aria-label={getLabel("nerves")}>
-          {[
-            [40, 270],
-            [260, 270], // hands
-            [55, 230],
-            [245, 230], // forearms
-            [95, 500],
-            [120, 500],
-            [180, 500],
-            [205, 500], // feet
-          ].map(([cx, cy], i) => (
-            <circle key={i} cx={cx} cy={cy} r="6" fill={getOrganFill("nerves", currentStep, reducedMotion)} opacity={activeOrgans.includes("nerves") ? 0.85 : 0.15} style={{ transition }} />
-          ))}
-        </g>
-
-        {/* Legs */}
-        <g id="legs-path" role="img" aria-label={getLabel("legs")}>
-          <rect x="92" y="290" width="42" height="180" rx="15" fill={getOrganFill("legs", currentStep, reducedMotion)} opacity={activeOrgans.includes("legs") ? 0.7 : 0.1} style={{ transition }} />
-          <rect x="166" y="290" width="42" height="180" rx="15" fill={getOrganFill("legs", currentStep, reducedMotion)} opacity={activeOrgans.includes("legs") ? 0.7 : 0.1} style={{ transition }} />
-        </g>
-      </svg>
-
-      {/* Screen reader description of current state */}
+      {/* Screen reader description */}
       <div className="sr-only" aria-live="polite">
         {currentStep === 0 && "Body diagram showing a neutral human figure. Scroll to see how diabetes affects different organs."}
         {currentStep >= 1 && currentStep <= 7 && `Highlighted: ${activeOrgans.map(getLabel).join(", ")}`}

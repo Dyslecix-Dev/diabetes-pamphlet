@@ -33,7 +33,7 @@ const cards: TypeCard[] = [
 export default function TypeComparison({ currentStep }: TypeComparisonProps) {
   // Show T1 card from step 1, T2 card from step 4
   const showT1 = currentStep >= 1;
-  const showT2 = currentStep >= 4;
+  const showT2 = currentStep >= 1;
 
   return (
     <div className="flex flex-col gap-4" role="list" aria-label="Comparison of Type 1 and Type 2 diabetes">

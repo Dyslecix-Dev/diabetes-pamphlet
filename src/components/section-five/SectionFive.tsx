@@ -55,14 +55,14 @@ const steps: ScrollStep[] = [
   {
     content: (
       <p>
-        <strong>Kidney damage</strong> — diabetes is the <strong>leading cause of kidney failure</strong> in the United States.
+        <strong>Kidney damage</strong> — sustained high blood glucose gradually destroys the delicate filtering structures in your kidneys.
       </p>
     ),
   },
   {
     content: (
       <p>
-        <strong>Increased risk of heart disease.</strong> People with diabetes are twice as likely to have heart disease or a stroke.
+        <strong>Increased risk of heart disease.</strong> Chronically high blood glucose damages blood vessels, raising your risk of cardiovascular disease.
       </p>
     ),
   },

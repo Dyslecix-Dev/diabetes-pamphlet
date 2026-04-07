@@ -34,7 +34,13 @@ const STAGES: Stage[] = [
   },
 ];
 
+const STAGE_ROW_HEIGHT = 72; // h-12 icon + mb-6 gap ≈ 72px
+
 export default function TreatmentTimeline({ activeStage }: { activeStage: number }) {
+  const visibleCount = Math.min(activeStage, 3) + 1;
+  // Line spans from center of first circle to center of last visible circle
+  const lineHeight = (visibleCount - 1) * STAGE_ROW_HEIGHT;
+
   return (
     <div className="mx-auto w-full max-w-sm">
       <h3 className="font-display mb-4 text-center text-xl" style={{ color: "var(--color-green-dark)" }}>
@@ -42,14 +48,37 @@ export default function TreatmentTimeline({ activeStage }: { activeStage: number
       </h3>
 
       <div className="relative" role="list" aria-label="Treatment progression from lifestyle changes to insulin therapy">
-        {/* Connecting line */}
-        <div className="absolute top-6 bottom-6 left-6 w-0.5" style={{ backgroundColor: "var(--color-cream)" }} aria-hidden="true" />
+        {/* Connecting line — grows as stages reveal */}
+        <div
+          className="absolute left-6 w-0.5"
+          style={{
+            backgroundColor: "var(--color-cream)",
+            top: "1.5rem",
+            height: `${lineHeight}px`,
+            transition: "height 0.5s ease",
+          }}
+          aria-hidden="true"
+        />
 
         {STAGES.map((stage, i) => {
           const Icon = stage.icon;
           const isActive = i <= activeStage;
+          const isMedication = i >= 2;
+          const shouldHide = isMedication && !isActive;
           return (
-            <div key={stage.label} className="relative mb-6 flex items-start gap-4 last:mb-0" role="listitem" aria-current={i === activeStage ? "step" : undefined}>
+            <div
+              key={stage.label}
+              className="relative mb-6 flex items-start gap-4 last:mb-0"
+              role="listitem"
+              aria-current={i === activeStage ? "step" : undefined}
+              style={{
+                opacity: shouldHide ? 0 : 1,
+                transform: shouldHide ? "translateY(12px)" : "translateY(0)",
+                transition: "opacity 0.5s ease, transform 0.5s ease",
+                pointerEvents: shouldHide ? "none" : "auto",
+              }}
+              aria-hidden={shouldHide}
+            >
               {/* Icon circle */}
               <div
                 className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-all duration-500"
@@ -76,14 +105,22 @@ export default function TreatmentTimeline({ activeStage }: { activeStage: number
                   {stage.description}
                 </p>
               </div>
+
+              {/* "Progression depends" label — follows last visible stage */}
+              {i === activeStage && (
+                <div
+                  className="font-body absolute -bottom-5 left-0 w-full text-center text-xs"
+                  style={{
+                    color: "var(--color-text-muted)",
+                    transition: "opacity 0.3s ease",
+                  }}
+                >
+                  Progression depends on type and severity
+                </div>
+              )}
             </div>
           );
         })}
-
-        {/* Arrow label */}
-        <div className="font-body mt-2 text-center text-xs" style={{ color: "var(--color-text-muted)" }}>
-          Progression depends on type and severity
-        </div>
       </div>
     </div>
   );

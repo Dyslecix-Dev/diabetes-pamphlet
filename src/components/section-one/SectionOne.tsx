@@ -1,6 +1,7 @@
 import ScrollySection, { type ScrollStep } from "../ScrollySection";
 import DiagnosisCounter from "./DiagnosisCounter";
 import GlucoseAnimation from "./GlucoseAnimation";
+import KetoneAnimation from "./KetoneAnimation";
 import PrevalenceChart from "./PrevalenceChart";
 
 const steps: ScrollStep[] = [
@@ -48,7 +49,7 @@ const steps: ScrollStep[] = [
   {
     content: (
       <p>
-        Adult cases have <strong>more than doubled</strong> since 2001.
+        Adult cases have <strong>more than doubled</strong> since the 1980s.
       </p>
     ),
   },
@@ -62,8 +63,12 @@ function SectionOneVisual({ currentStep }: { currentStep: number }) {
   // Step 5: death ranking stat (text-based)
   // Step 6: Prevalence chart
   // Step 7: Live counter
-  if (currentStep <= 4) {
+  if (currentStep <= 2) {
     return <GlucoseAnimation currentStep={currentStep} />;
+  }
+
+  if (currentStep === 3 || currentStep === 4) {
+    return <KetoneAnimation currentStep={currentStep} />;
   }
 
   if (currentStep === 5) {

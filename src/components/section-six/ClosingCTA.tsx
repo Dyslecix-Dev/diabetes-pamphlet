@@ -3,15 +3,15 @@ import { BookOpen, ExternalLink, Heart } from "lucide-react";
 const RESOURCES = [
   {
     label: "CDC Diabetes Basics",
-    url: "https://www.cdc.gov/diabetes/basics/index.html",
+    url: "https://www.cdc.gov/diabetes/about/index.html",
   },
   {
     label: "ADA — Living with Type 2",
-    url: "https://diabetes.org/type-2",
+    url: "https://diabetes.org/living-with-diabetes/type-2",
   },
   {
     label: "NIDDK — Diabetes Overview",
-    url: "https://www.niddk.nih.gov/health-information/diabetes/overview",
+    url: "https://www.niddk.nih.gov/health-information/diabetes",
   },
 ];
 
