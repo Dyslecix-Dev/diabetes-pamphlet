@@ -47,7 +47,7 @@ This section exercises all core patterns: scrollama, GSAP animation, D3 chart, l
 - [x] `DiagnosisCounter.tsx` — live counter starting from page entry. Use `requestAnimationFrame` or `setInterval`.
 - [x] Wire all into `ScrollySection` with 8 narrative steps
 - [x] Add accessible data table behind the chart
-- [ ] Test on mobile
+- [x] Test on mobile
 
 ## Phase 5: Section 2 — Type I vs. Type II
 
@@ -90,11 +90,11 @@ Building this before Sections 3–4 because it exercises SVG interaction and the
 
 ## Phase 10: Polish
 
-- [ ] Transitions between sections — smooth scroll, chapter breaks, background color shifts
-- [ ] Progress bar accuracy — verify it tracks all 6 sections correctly
-- [ ] Mobile QA — test every section on phone-width viewport
-- [ ] Accessibility audit — keyboard navigation through all interactives, screen reader test, contrast check
-- [ ] Reduced motion pass — verify all animations respect `prefers-reduced-motion`
-- [ ] Performance — check for jank during scroll animations. Optimize SVG complexity if needed.
-- [ ] Loading states — add skeleton/placeholder for any components that hydrate slowly
-- [ ] Final content pass — proofread all narrative text, verify all statistics match source data files
+- [x] Transitions between sections — smooth scroll, chapter breaks, background color shifts
+- [x] Progress bar accuracy — verify it tracks all 6 sections correctly
+- [x] Mobile QA — test every section on phone-width viewport
+- [x] Accessibility audit — keyboard navigation through all interactives, screen reader test, contrast check
+- [x] Reduced motion pass — verify all animations respect `prefers-reduced-motion`
+- [x] Performance — check for jank during scroll animations. Optimize SVG complexity if needed.
+- [x] Loading states — add skeleton/placeholder for any components that hydrate slowly
+- [x] Final content pass — proofread all narrative text, verify all statistics match source data files

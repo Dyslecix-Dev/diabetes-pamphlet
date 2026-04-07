@@ -30,6 +30,12 @@ const { title = "Understanding Diabetes — An Interactive Guide", description =
     <title>{title}</title>
   </head>
   <body class="antialiased">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-100 focus:rounded focus:bg-green-dark focus:px-4 focus:py-2 focus:text-white focus:outline-none"
+    >
+      Skip to main content
+    </a>
     <slot />
   </body>
 </html>

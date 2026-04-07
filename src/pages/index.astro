@@ -14,12 +14,17 @@ import SectionSix from "../components/section-six/SectionSix";
   <ProgressBar client:load />
   <ChapterNav client:load />
 
-  <main>
+  <main id="main-content">
     <SectionOne client:load />
-    <SectionTwo client:load />
-    <SectionThree client:load />
-    <SectionFour client:load />
-    <SectionFive client:load />
-    <SectionSix client:load />
+    <div class="section-divider" role="separator" aria-hidden="true"></div>
+    <SectionTwo client:visible />
+    <div class="section-divider" role="separator" aria-hidden="true"></div>
+    <SectionThree client:visible />
+    <div class="section-divider" role="separator" aria-hidden="true"></div>
+    <SectionFour client:visible />
+    <div class="section-divider" role="separator" aria-hidden="true"></div>
+    <SectionFive client:visible />
+    <div class="section-divider" role="separator" aria-hidden="true"></div>
+    <SectionSix client:visible />
   </main>
 </Layout>

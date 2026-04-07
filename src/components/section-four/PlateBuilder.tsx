@@ -89,7 +89,7 @@ export default function PlateBuilder() {
 
       {/* Plate area */}
       <div
-        className="relative mx-auto mb-4 flex min-h-[200px] w-[280px] flex-wrap items-center justify-center gap-2 rounded-full border-4 border-dashed p-8 transition-colors"
+        className="relative mx-auto mb-4 flex min-h-50 w-70 flex-wrap items-center justify-center gap-2 rounded-full border-4 border-dashed p-8 transition-colors"
         style={{
           borderColor: dragOver ? "var(--color-green-mid)" : "var(--color-cream)",
           backgroundColor: dragOver ? "rgba(98, 129, 65, 0.05)" : "rgba(229, 217, 182, 0.2)",
@@ -178,7 +178,7 @@ export default function PlateBuilder() {
               onDragStart={(e) => e.dataTransfer.setData("text/plain", item.id)}
               onClick={() => !onPlate && addToPlate(item)}
               disabled={onPlate || plateItems.length >= MAX_PLATE_ITEMS}
-              className="flex flex-col items-center rounded-lg p-1.5 text-center transition-opacity"
+              className="flex min-h-11 min-w-11 flex-col items-center rounded-lg p-2 text-center transition-opacity"
               style={{
                 opacity: onPlate ? 0.35 : 1,
                 backgroundColor: onPlate ? "transparent" : CATEGORY_COLORS[item.category] + "15",

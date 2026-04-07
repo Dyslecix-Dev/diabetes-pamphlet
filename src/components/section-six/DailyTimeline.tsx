@@ -128,7 +128,7 @@ export default function DailyTimeline({ isActive = false }: { isActive?: boolean
             onClick={() => setScenario(s.id)}
             role="radio"
             aria-checked={scenario === s.id}
-            className="font-body rounded-full px-3 py-1.5 text-sm transition-colors"
+            className="font-body min-h-11 rounded-full px-3 py-2 text-sm transition-colors"
             style={{
               backgroundColor: scenario === s.id ? "var(--color-green-mid)" : "var(--color-cream)",
               color: scenario === s.id ? "#fff" : "var(--color-text)",
@@ -142,7 +142,7 @@ export default function DailyTimeline({ isActive = false }: { isActive?: boolean
       </div>
 
       {/* SVG Chart */}
-      <svg ref={svgRef} viewBox={`0 0 ${width} ${height}`} className="w-full max-w-[600px]" aria-hidden="true">
+      <svg ref={svgRef} viewBox={`0 0 ${width} ${height}`} className="w-full max-w-150" aria-hidden="true">
         {/* Normal range band */}
         <rect x={padding.left} y={yScale(140)} width={chartW} height={yScale(80) - yScale(140)} fill="var(--color-green-mid)" opacity={0.08} />
         <text x={padding.left + 4} y={yScale(138)} fontSize="9" fill="var(--color-text-muted)">
