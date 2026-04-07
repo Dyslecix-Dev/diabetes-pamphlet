@@ -70,10 +70,10 @@ Building this before Sections 3–4 because it exercises SVG interaction and the
 
 ## Phase 7: Section 3 — How Diabetes Develops
 
-- [ ] `DayInTheLife.tsx` — animated physiological sequence (food → blood → insulin → cells). GSAP timeline or step-driven.
-- [ ] `RiskFactorViz.tsx` — obesity/overweight prevalence stats display
-- [ ] `ScreeningGap.tsx` — bar chart: 33.4% strict vs 74.3% broad testing. "1 in 4 untested" callout. USPSTF timeline (2008, 2015, 2021).
-- [ ] Wire into `ScrollySection` with 10 narrative steps
+- [x] `DayInTheLife.tsx` — animated physiological sequence (food → blood → insulin → cells). GSAP timeline or step-driven.
+- [x] `RiskFactorViz.tsx` — obesity/overweight prevalence stats display
+- [x] `ScreeningGap.tsx` — bar chart: 33.4% strict vs 74.3% broad testing. "1 in 4 untested" callout. USPSTF timeline (2008, 2015, 2021).
+- [x] Wire into `ScrollySection` with 10 narrative steps
 
 ## Phase 8: Section 4 — Treatments
 
