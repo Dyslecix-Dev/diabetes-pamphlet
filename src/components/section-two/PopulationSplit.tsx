@@ -96,8 +96,8 @@ export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
                 d={PERSON_PATH}
                 fill={color}
                 style={{
-                  transition: reducedMotion ? "none" : "fill 0.6s ease",
-                  transitionDelay: isT2Entering && !reducedMotion ? `${(index - T1D_COUNT) * 0.012}s` : "0s",
+                  transition: reducedMotion ? "none" : "fill 0.8s ease",
+                  transitionDelay: isT2Entering && !reducedMotion ? `${(index - T1D_COUNT) * 0.025}s` : "0s",
                 }}
               />
             </g>

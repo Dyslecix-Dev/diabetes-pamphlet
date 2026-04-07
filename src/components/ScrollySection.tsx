@@ -62,7 +62,12 @@ export default function ScrollySection({ id, steps, visualComponent, visualGroup
   const isTransitioning = exitingStep !== null;
 
   return (
-    <section id={id} className={`relative ${className}`}>
+    <section id={id} className={`relative ${className}`} aria-labelledby={`${id}-heading`}>
+      {/* Screen reader announcement for step changes */}
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {`Step ${currentStep + 1} of ${steps.length}`}
+      </div>
+
       <div className="lg:flex">
         <StickyVisual>
           <div className="relative">

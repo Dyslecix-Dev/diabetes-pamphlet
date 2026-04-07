@@ -1,0 +1,1088 @@
+---
+/**
+ * Responsive animated pamphlet condensing the full diabetes scrollytelling site.
+ * Access at /pamphlet — use browser Print → Save as PDF.
+ */
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diabetes Pamphlet — Christian Demesa</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap");
+
+      :root {
+        --green-dark: #40513b;
+        --green-mid: #628141;
+        --cream: #e5d9b6;
+        --orange: #e67e22;
+        --danger: #c0392b;
+        --text: #2d2d2d;
+        --bg: #fafaf5;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        line-height: 1.55;
+        color: var(--text);
+        background: var(--bg);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        overflow-x: hidden;
+      }
+
+      /* ── Header ── */
+      .header {
+        text-align: center;
+        padding: 2.5rem 1.5rem 1.5rem;
+        border-bottom: 3px solid var(--green-dark);
+        margin: 0 auto 1.5rem;
+        max-width: 1200px;
+        opacity: 0;
+        transform: translateY(-30px);
+        animation: slideDown 0.8s ease-out 0.2s forwards;
+      }
+      .header h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(1.8rem, 5vw, 3rem);
+        color: var(--green-dark);
+        letter-spacing: 0.5px;
+      }
+      .header .byline {
+        font-size: clamp(0.9rem, 2vw, 1.15rem);
+        color: #777;
+        margin-top: 0.25rem;
+      }
+
+      /* ── Grid ── */
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+      }
+      @media (min-width: 640px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (min-width: 1024px) {
+        .grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      /* ── Section cards ── */
+      .section {
+        background: white;
+        border-radius: 12px;
+        padding: 1.25rem 1.35rem;
+        border-left: 4px solid var(--green-mid);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        /* entrance */
+        opacity: 0;
+        transform: translateY(40px) scale(0.97);
+        /* idle float */
+        transition:
+          box-shadow 0.3s ease,
+          transform 0.3s ease;
+      }
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        animation: cardEnter 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      .section:hover {
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px) scale(1);
+      }
+
+      /* staggered idle float per card */
+      .section.visible:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .section.visible:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .section.visible:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .section.visible:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+      .section.visible:nth-child(5) {
+        animation-delay: 0.4s;
+      }
+      .section.visible:nth-child(6) {
+        animation-delay: 0.5s;
+      }
+
+      /* idle breathing animation applied after entrance */
+      .section.idle {
+        animation: breathe 4s ease-in-out infinite;
+      }
+      .section.idle:nth-child(2) {
+        animation-delay: 0.6s;
+      }
+      .section.idle:nth-child(3) {
+        animation-delay: 1.2s;
+      }
+      .section.idle:nth-child(4) {
+        animation-delay: 1.8s;
+      }
+      .section.idle:nth-child(5) {
+        animation-delay: 2.4s;
+      }
+      .section.idle:nth-child(6) {
+        animation-delay: 3s;
+      }
+
+      .section h2 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+        color: var(--green-dark);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .section h2 .num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        background: var(--green-dark);
+        color: white;
+        border-radius: 50%;
+        font-family: "Inter", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .section p {
+        margin-bottom: 0.45rem;
+        font-size: clamp(0.875rem, 1.8vw, 1rem);
+      }
+      .section ul {
+        padding-left: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+      .section li {
+        margin-bottom: 0.25rem;
+        font-size: clamp(0.875rem, 1.8vw, 1rem);
+      }
+
+      /* ── Stat callouts ── */
+      .stat {
+        display: inline-block;
+        background: var(--cream);
+        border-radius: 4px;
+        padding: 0.1em 0.45em;
+        font-weight: 700;
+        color: var(--green-dark);
+      }
+      .stat-danger {
+        background: #fde8e8;
+        color: var(--danger);
+      }
+      .stat-orange {
+        background: #fef3e2;
+        color: var(--orange);
+      }
+
+      /* ── Mini chart ── */
+      .mini-chart {
+        background: var(--cream);
+        border-radius: 8px;
+        padding: 0.65rem 0.75rem;
+        margin: 0.6rem 0;
+      }
+      .mini-chart .chart-title {
+        font-size: clamp(0.65rem, 1.4vw, 0.8rem);
+        font-weight: 700;
+        color: var(--green-dark);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.4rem;
+      }
+      .bar-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.3rem;
+        font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+      }
+      .bar-label {
+        width: 80px;
+        text-align: right;
+        flex-shrink: 0;
+        font-size: clamp(0.7rem, 1.4vw, 0.8rem);
+      }
+      .bar-track {
+        flex: 1;
+        height: 12px;
+        background: #e8e0cc;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        border-radius: 4px;
+        width: 0%;
+        transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .section.visible .bar-fill {
+        /* widths set via inline style, transition handles the animation */
+      }
+      .bar-val {
+        width: 55px;
+        font-weight: 700;
+        font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+      }
+
+      /* ── Glucose zones ── */
+      .glucose-zones {
+        display: flex;
+        gap: 0;
+        border-radius: 6px;
+        overflow: hidden;
+        height: 24px;
+        margin: 0.5rem 0 0.35rem;
+        font-size: clamp(0.6rem, 1.3vw, 0.75rem);
+        font-weight: 700;
+        color: white;
+        text-align: center;
+        line-height: 24px;
+      }
+      .gz-hypo {
+        background: var(--danger);
+        flex: 70;
+      }
+      .gz-normal {
+        background: #27ae60;
+        flex: 30;
+      }
+      .gz-pre {
+        background: var(--orange);
+        flex: 26;
+      }
+      .gz-diab {
+        background: var(--danger);
+        flex: 50;
+      }
+
+      /* idle shimmer on glucose zones */
+      .section.idle .glucose-zones {
+        animation: shimmer 3s ease-in-out infinite alternate;
+      }
+
+      /* ── Body complications list ── */
+      .comp-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.25rem 0.75rem;
+        font-size: clamp(0.8rem, 1.6vw, 0.9rem);
+        margin: 0.35rem 0;
+      }
+      .comp-item {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .comp-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--danger);
+        flex-shrink: 0;
+      }
+      /* idle pulse on comp dots */
+      .section.idle .comp-dot {
+        animation: pulse 2s ease-in-out infinite;
+      }
+      .section.idle .comp-item:nth-child(2) .comp-dot {
+        animation-delay: 0.3s;
+      }
+      .section.idle .comp-item:nth-child(3) .comp-dot {
+        animation-delay: 0.6s;
+      }
+      .section.idle .comp-item:nth-child(4) .comp-dot {
+        animation-delay: 0.9s;
+      }
+      .section.idle .comp-item:nth-child(5) .comp-dot {
+        animation-delay: 1.2s;
+      }
+      .section.idle .comp-item:nth-child(6) .comp-dot {
+        animation-delay: 1.5s;
+      }
+
+      /* ── Plate visual ── */
+      .plate {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin: 0.5rem 0;
+      }
+      .plate-item {
+        background: var(--cream);
+        border-radius: 6px;
+        padding: 0.2rem 0.6rem;
+        font-size: clamp(0.75rem, 1.5vw, 0.88rem);
+        font-weight: 600;
+        color: var(--green-dark);
+        transition:
+          transform 0.3s ease,
+          background 0.3s ease;
+      }
+      .plate-item:hover {
+        transform: scale(1.08);
+        background: #d4c99a;
+      }
+      /* idle wobble on plate items */
+      .section.idle .plate-item {
+        animation: wobble 3s ease-in-out infinite;
+      }
+      .section.idle .plate-item:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .section.idle .plate-item:nth-child(3) {
+        animation-delay: 0.8s;
+      }
+      .section.idle .plate-item:nth-child(4) {
+        animation-delay: 1.2s;
+      }
+      .section.idle .plate-item:nth-child(5) {
+        animation-delay: 1.6s;
+      }
+      .section.idle .plate-item:nth-child(6) {
+        animation-delay: 2s;
+      }
+
+      /* ── Source lines ── */
+      .source {
+        font-size: clamp(0.65rem, 1.2vw, 0.75rem);
+        color: #999;
+        margin-top: 0.25rem;
+      }
+
+      /* ── Footer ── */
+      .footer {
+        max-width: 1200px;
+        margin: 1.5rem auto 2rem;
+        padding: 0.75rem 1.25rem 0;
+        border-top: 2px solid var(--green-dark);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: clamp(0.7rem, 1.3vw, 0.85rem);
+        color: #888;
+        opacity: 0;
+        animation: fadeIn 0.8s ease-out 1.2s forwards;
+      }
+
+      /* ── Prevention callout ── */
+      .prevention {
+        background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+        border-left-color: #27ae60;
+      }
+
+      /* ── Keyframes ── */
+      @keyframes slideDown {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes cardEnter {
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-3px);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.4);
+          opacity: 0.7;
+        }
+      }
+      @keyframes wobble {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(-1.5deg);
+        }
+        75% {
+          transform: rotate(1.5deg);
+        }
+      }
+      @keyframes shimmer {
+        0% {
+          filter: brightness(1);
+        }
+        100% {
+          filter: brightness(1.12);
+        }
+      }
+
+      /* ── Reduced motion ── */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+        .header,
+        .section,
+        .footer {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* ── Print ── */
+      @media print {
+        body {
+          background: white;
+          font-size: 8pt;
+        }
+        .header {
+          padding: 6px 0;
+          margin-bottom: 6px;
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+        .header h1 {
+          font-size: 18pt;
+        }
+        .grid {
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 6px;
+          padding: 0;
+        }
+        .section {
+          padding: 6px 8px;
+          border-radius: 4px;
+          box-shadow: none;
+          opacity: 1;
+          transform: none;
+          animation: none;
+        }
+        .section p,
+        .section li {
+          font-size: 7pt;
+        }
+        .section h2 {
+          font-size: 9pt;
+        }
+        .section h2 .num {
+          width: 14px;
+          height: 14px;
+          font-size: 6.5pt;
+        }
+        .bar-row,
+        .bar-label,
+        .bar-val {
+          font-size: 6.5pt;
+        }
+        .bar-track {
+          height: 8px;
+        }
+        .mini-chart {
+          padding: 4px 5px;
+          margin: 3px 0;
+        }
+        .mini-chart .chart-title {
+          font-size: 6pt;
+        }
+        .glucose-zones {
+          height: 14px;
+          font-size: 5.5pt;
+          line-height: 14px;
+        }
+        .comp-grid {
+          font-size: 6.5pt;
+        }
+        .comp-dot {
+          width: 5px;
+          height: 5px;
+        }
+        .plate-item {
+          font-size: 6.5pt;
+          padding: 1px 4px;
+        }
+        .source {
+          font-size: 5.5pt;
+        }
+        .footer {
+          margin-top: 5px;
+          padding-top: 4px;
+          font-size: 6pt;
+          animation: none;
+          opacity: 1;
+        }
+        .print-notice {
+          display: none;
+        }
+        @page {
+          size: letter;
+          margin: 0.35in;
+        }
+      }
+
+      /* ── Screen print notice ── */
+      .print-notice {
+        text-align: center;
+        padding: 0.6rem 1rem;
+        background: var(--cream);
+        border-radius: 8px;
+        margin: 0 auto 1rem;
+        max-width: 1200px;
+        font-size: 0.85rem;
+        color: var(--green-dark);
+      }
+      @media print {
+        .print-notice {
+          display: none;
+        }
+      }
+
+      /* ── Section Nav Dots ── */
+      .section-nav {
+        position: fixed;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        z-index: 100;
+        opacity: 0;
+        animation: fadeIn 0.6s ease-out 1s forwards;
+      }
+      .section-nav-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 2px solid var(--green-mid);
+        background: transparent;
+        cursor: pointer;
+        transition:
+          background 0.4s ease,
+          border-color 0.4s ease,
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        position: relative;
+      }
+      .section-nav-dot:hover {
+        transform: scale(1.35);
+        box-shadow: 0 0 8px rgba(98, 129, 65, 0.4);
+      }
+      .section-nav-dot.passed {
+        background: var(--green-mid);
+        border-color: var(--green-mid);
+      }
+      .section-nav-dot.just-passed {
+        animation: dotPop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .section-nav-dot.active {
+        background: var(--green-dark);
+        border-color: var(--green-dark);
+        transform: scale(1.25);
+        box-shadow: 0 0 10px rgba(64, 81, 59, 0.5);
+      }
+      /* Tooltip */
+      .section-nav-dot::after {
+        content: attr(data-label);
+        position: absolute;
+        right: calc(100% + 8px);
+        top: 50%;
+        transform: translateY(-50%) translateX(4px);
+        white-space: nowrap;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--green-dark);
+        background: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+      }
+      .section-nav-dot:hover::after {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+      }
+      /* Idle pulse on passed dots */
+      .section-nav-dot.passed:not(.active) {
+        animation: dotBreathe 3s ease-in-out infinite;
+      }
+      .section-nav-dot.passed:not(.active):nth-child(2) {
+        animation-delay: 0.5s;
+      }
+      .section-nav-dot.passed:not(.active):nth-child(3) {
+        animation-delay: 1s;
+      }
+      .section-nav-dot.passed:not(.active):nth-child(4) {
+        animation-delay: 1.5s;
+      }
+      .section-nav-dot.passed:not(.active):nth-child(5) {
+        animation-delay: 2s;
+      }
+      .section-nav-dot.passed:not(.active):nth-child(6) {
+        animation-delay: 2.5s;
+      }
+      @keyframes dotPop {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.6);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      @keyframes dotBreathe {
+        0%,
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 rgba(98, 129, 65, 0);
+        }
+        50% {
+          transform: scale(1.15);
+          box-shadow: 0 0 8px rgba(98, 129, 65, 0.35);
+        }
+      }
+      @media (max-width: 639px) {
+        .section-nav {
+          right: 0.5rem;
+          gap: 0.6rem;
+        }
+        .section-nav-dot {
+          width: 10px;
+          height: 10px;
+        }
+        .section-nav-dot::after {
+          display: none;
+        }
+      }
+      @media print {
+        .section-nav {
+          display: none;
+        }
+      }
+
+      /* ── Desktop popup ── */
+      .desktop-popup {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+      .desktop-popup.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .desktop-popup-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem 2.5rem;
+        max-width: 420px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        transform: translateY(20px) scale(0.95);
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .desktop-popup.show .desktop-popup-card {
+        transform: translateY(0) scale(1);
+      }
+      .desktop-popup-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.5rem;
+        color: var(--green-dark);
+        margin-bottom: 0.5rem;
+      }
+      .desktop-popup-desc {
+        font-size: 0.95rem;
+        color: #555;
+        line-height: 1.5;
+        margin-bottom: 1.25rem;
+      }
+      .desktop-popup-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        align-items: center;
+      }
+      .desktop-popup-btn {
+        display: inline-block;
+        background: var(--green-dark);
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0.7rem 1.8rem;
+        border-radius: 8px;
+        text-decoration: none;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+      .desktop-popup-btn:hover {
+        transform: scale(1.05);
+        background: var(--green-mid);
+      }
+      .desktop-popup-dismiss {
+        background: none;
+        border: none;
+        font-size: 0.85rem;
+        color: #999;
+        cursor: pointer;
+        padding: 0.3rem 0.6rem;
+        transition: color 0.2s ease;
+      }
+      .desktop-popup-dismiss:hover {
+        color: var(--text);
+      }
+      @media print {
+        .desktop-popup {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Section Nav Dots -->
+    <nav class="section-nav" aria-label="Section navigation">
+      <button class="section-nav-dot" data-target="0" data-label="What Is Diabetes?" aria-label="Go to Section 1"></button>
+      <button class="section-nav-dot" data-target="1" data-label="Type 1 vs. Type 2" aria-label="Go to Section 2"></button>
+      <button class="section-nav-dot" data-target="2" data-label="How It Develops" aria-label="Go to Section 3"></button>
+      <button class="section-nav-dot" data-target="3" data-label="Treatment & Diet" aria-label="Go to Section 4"></button>
+      <button class="section-nav-dot" data-target="4" data-label="Risks & Complications" aria-label="Go to Section 5"></button>
+      <button class="section-nav-dot" data-target="5" data-label="Living With Diabetes" aria-label="Go to Section 6"></button>
+    </nav>
+
+    <div class="print-notice">
+      <strong>To save as PDF:</strong> Press <kbd>Ctrl</kbd>+<kbd>P</kbd> (or <kbd>Cmd+P</kbd>) &rarr; Destination: "Save as PDF" &rarr; Scale: Fit to page
+    </div>
+
+    <header class="header" role="banner">
+      <h1>Understanding Diabetes</h1>
+      <p class="byline">by Christian Demesa</p>
+    </header>
+
+    <main class="grid" role="main">
+      <!-- Section 1 -->
+      <div class="section" data-section>
+        <h2><span class="num">1</span> What Is Diabetes?</h2>
+        <p>Your body runs on glucose — fuel for every cell. <strong>Diabetes</strong> is when blood glucose stays dangerously high because insulin isn't doing its job.</p>
+        <p>
+          Without glucose entering cells, your body burns fat instead, producing toxic <strong>ketone bodies</strong> that can lead to <span class="stat-danger"
+            >diabetic ketoacidosis, coma, or death</span
+          >.
+        </p>
+        <p>Diabetes is the <span class="stat">7th leading cause of death</span> in the US. Adult cases have <span class="stat">more than doubled</span> since 2001.</p>
+        <div class="mini-chart">
+          <div class="chart-title">US Diabetes Prevalence (adults 18+)</div>
+          <div class="bar-row">
+            <span class="bar-label">2001–04</span><div class="bar-track"><div class="bar-fill" data-width="74%" style="background:var(--green-mid)"></div></div><span class="bar-val">11.2%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">2009–12</span><div class="bar-track"><div class="bar-fill" data-width="80%" style="background:var(--green-mid)"></div></div><span class="bar-val">12.1%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">2015–18</span><div class="bar-track"><div class="bar-fill" data-width="94%" style="background:var(--green-dark)"></div></div><span class="bar-val">14.1%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">2021–23</span><div class="bar-track"><div class="bar-fill" data-width="90%" style="background:var(--green-dark)"></div></div><span class="bar-val">13.5%</span>
+          </div>
+        </div>
+        <p class="source">Source: CDC NHANES 2001–2023</p>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="section" data-section>
+        <h2><span class="num">2</span> Type 1 vs. Type 2</h2>
+        <p>
+          <strong>Type 1</strong> — autoimmune. Your immune system destroys insulin-producing beta cells. Requires lifelong insulin. Accounts for <span class="stat">5–10%</span> of cases. Peak diagnosis
+          age: <span class="stat">10 years old</span>.
+        </p>
+        <p><strong>Type 2</strong> — insulin resistance. Cells stop responding to insulin. Accounts for <span class="stat-orange">90–95%</span> of all cases.</p>
+        <div class="mini-chart">
+          <div class="chart-title">Rising Youth Incidence (annual increase)</div>
+          <div class="bar-row">
+            <span class="bar-label">Type 1</span><div class="bar-track"><div class="bar-fill" data-width="38%" style="background:var(--green-mid)"></div></div><span class="bar-val">+2.0%/yr</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Type 2</span><div class="bar-track"><div class="bar-fill" data-width="100%" style="background:var(--orange)"></div></div><span class="bar-val">+5.3%/yr</span>
+          </div>
+        </div>
+        <p>
+          Highest increases among <strong>Asian/Pacific Islander, Hispanic,</strong> and <strong>non-Hispanic Black</strong> youth. Meanwhile, adult incidence <em>declined</em> 3.1%/yr — trends are diverging.
+        </p>
+        <p><strong>Prediabetes</strong> — blood glucose higher than normal but not yet diabetes. A warning sign that complications can already begin.</p>
+        <p class="source">Source: SEARCH for Diabetes in Youth Study</p>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="section" data-section>
+        <h2><span class="num">3</span> How It Develops</h2>
+        <p>When you eat, sugar hits your bloodstream. Your pancreas releases insulin to help cells absorb glucose. In a healthy body, this works smoothly.</p>
+        <p>But with excess sugar, inactivity, or excess weight — <strong>cells start ignoring insulin</strong>. This is insulin resistance.</p>
+        <p>US overweight prevalence: <span class="stat-orange">31.1%</span>. Obesity: <span class="stat-orange">42.5%</span>.</p>
+        <div class="mini-chart">
+          <div class="chart-title">Screening Gap (2016–2019)</div>
+          <div class="bar-row">
+            <span class="bar-label">Strict testing</span><div class="bar-track"><div class="bar-fill" data-width="33%" style="background:var(--danger)"></div></div><span class="bar-val">33.4%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Broad testing</span><div class="bar-track"><div class="bar-fill" data-width="74%" style="background:var(--orange)"></div></div><span class="bar-val">74.3%</span>
+          </div>
+        </div>
+        <p>
+          At least <span class="stat-danger">1 in 4</span> overweight/obese adults went untested in 3 years. Adults <em>aware</em> of prediabetes are <span class="stat">2x more likely</span> to pursue lifestyle
+          changes.
+        </p>
+        <p class="source">Source: CDC PCD 2023</p>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="section" data-section>
+        <h2><span class="num">4</span> Treatment & Diet</h2>
+        <p>The central goal: <strong>blood glucose control</strong>. The most powerful tool? <strong>Your plate.</strong></p>
+        <div class="plate">
+          <span class="plate-item">Whole grains</span>
+          <span class="plate-item">Vegetables</span>
+          <span class="plate-item">Fruits</span>
+          <span class="plate-item">Lean protein</span>
+          <span class="plate-item">Low-fat milk</span>
+          <span class="plate-item">Healthy fats</span>
+        </div>
+        <p><strong>Why fiber matters:</strong> it slows digestion and glucose absorption, preventing blood sugar spikes.</p>
+        <p><strong>Exercise</strong> helps cells use insulin more effectively — one of the most powerful interventions.</p>
+        <p>Treatment spectrum: <em>lifestyle changes &rarr; oral medication &rarr; insulin injections</em>, depending on type and progression.</p>
+      </div>
+
+      <!-- Section 5 -->
+      <div class="section" data-section>
+        <h2><span class="num">5</span> Risks & Complications</h2>
+        <p>Chronic high blood glucose damages your body over time:</p>
+        <div class="comp-grid">
+          <div class="comp-item"><span class="comp-dot"></span> Nerve damage & numbness</div>
+          <div class="comp-item"><span class="comp-dot"></span> Eye damage & blindness</div>
+          <div class="comp-item"><span class="comp-dot"></span> Poor circulation & amputation</div>
+          <div class="comp-item"><span class="comp-dot"></span> Tooth & gum disease</div>
+          <div class="comp-item"><span class="comp-dot"></span> Kidney failure (#1 cause)</div>
+          <div class="comp-item"><span class="comp-dot"></span> Heart disease</div>
+        </div>
+        <div class="mini-chart">
+          <div class="chart-title">Amputation Rates (per 100k patients/yr)</div>
+          <div class="bar-row">
+            <span class="bar-label">Women</span><div class="bar-track"><div class="bar-fill" data-width="47%" style="background:var(--orange)"></div></div><span class="bar-val">83.8</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Men</span><div class="bar-track"><div class="bar-fill" data-width="100%" style="background:var(--danger)"></div></div><span class="bar-val">178.0</span>
+          </div>
+        </div>
+        <div class="glucose-zones">
+          <div class="gz-hypo">&lt;70 Hypo</div>
+          <div class="gz-normal">70–99 Normal</div>
+          <div class="gz-pre">100–125 Pre</div>
+          <div class="gz-diab">126+ Diabetic</div>
+        </div>
+        <p class="source">Source: Diabetologia meta-analysis, 2010–2020</p>
+      </div>
+
+      <!-- Section 6 -->
+      <div class="section prevention" data-section>
+        <h2><span class="num">6</span> Living With Diabetes</h2>
+        <p>Living with diabetes isn't about deprivation — it's about <strong>balance</strong>.</p>
+        <ul>
+          <li><strong>Eat regularly</strong> to balance insulin effects and avoid hypoglycemia</li>
+          <li><strong>High-fiber carbs</strong>, lean proteins, unsaturated fats, low-fat dairy</li>
+          <li><strong>Stay active</strong> — exercise is one of the most effective tools for glucose control</li>
+          <li><strong>Monitor blood glucose</strong> consistently — control is the central goal</li>
+          <li><strong>Limit sugary drinks</strong> and eat a heart-healthy, plant-based diet</li>
+        </ul>
+        <p style="margin-top:0.4rem"><strong>Type 2 is preventable.</strong> Lose excess weight. Exercise more. Get screened. Small changes in diet and activity can dramatically reduce your risk.</p>
+        <p style="margin-top:0.4rem;font-weight:700;color:var(--green-dark)">You now know more about diabetes than most people. Share what you've learned.</p>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span>Christian Demesa &middot; Diabetes Pamphlet &middot; 2026</span>
+      <span>Sources: CDC NHANES, SEARCH Study, CDC PCD 2023, Diabetologia Meta-analysis</span>
+    </footer>
+
+    <!-- Desktop popup suggesting full interactive version -->
+    <div id="desktop-popup" class="desktop-popup">
+      <div class="desktop-popup-card">
+        <p class="desktop-popup-title">Want the full experience?</p>
+        <p class="desktop-popup-desc">Your screen is large enough for the interactive scrollytelling version with animations, charts, and more.</p>
+        <div class="desktop-popup-actions">
+          <a href="/" class="desktop-popup-btn">View Interactive Version</a>
+          <button id="desktop-popup-dismiss" class="desktop-popup-dismiss">Stay here</button>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline>
+      // Desktop popup — only show on viewports >= 1024px
+      (function () {
+        var popup = document.getElementById("desktop-popup");
+        var dismiss = document.getElementById("desktop-popup-dismiss");
+        if (!popup || !dismiss) return;
+
+        var dismissed = false;
+
+        function showIfDesktop() {
+          if (dismissed) return;
+          if (window.innerWidth >= 1024) {
+            popup.classList.add("show");
+          }
+        }
+
+        function close() {
+          dismissed = true;
+          popup.classList.remove("show");
+        }
+
+        dismiss.addEventListener("click", close);
+
+        popup.addEventListener("click", function (e) {
+          if (e.target === popup) close();
+        });
+
+        setTimeout(showIfDesktop, 1500);
+      })();
+
+      // Intersection Observer for entrance animations
+      const sections = document.querySelectorAll("[data-section]");
+      const dots = document.querySelectorAll(".section-nav-dot");
+
+      const entranceObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const el = entry.target;
+              el.classList.add("visible");
+              setTimeout(() => {
+                el.querySelectorAll(".bar-fill[data-width]").forEach(function (bar) {
+                  bar.style.width = bar.getAttribute("data-width") || "";
+                });
+              }, 300);
+              setTimeout(() => {
+                el.classList.add("idle");
+              }, 1200);
+              entranceObserver.unobserve(el);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      sections.forEach((s) => entranceObserver.observe(s));
+
+      // Dot navigation: click to scroll
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const idx = parseInt(dot.getAttribute("data-target") || "0", 10);
+          const target = sections[idx];
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+
+      // Track active/passed sections
+      let highestPassed = -1;
+      function updateDots() {
+        const viewMid = window.innerHeight / 2;
+        let activeIdx = -1;
+        let minDist = Infinity;
+
+        // Mark all sections whose top is above viewport bottom as "in view",
+        // and pick the one closest to viewport center as active.
+        sections.forEach((section, i) => {
+          const rect = section.getBoundingClientRect();
+          // Section counts as reached if its top has entered the viewport
+          if (rect.top < window.innerHeight * 0.85) {
+            // Track highest reached section
+            if (i > highestPassed) {
+              highestPassed = i;
+            }
+          }
+          // Pick closest to center as active
+          const center = rect.top + rect.height / 2;
+          const dist = Math.abs(center - viewMid);
+          if (dist < minDist) {
+            minDist = dist;
+            activeIdx = i;
+          }
+        });
+
+        // Update dot states
+        dots.forEach((d, i) => {
+          const wasPassed = d.classList.contains("passed");
+          const isPassed = i <= highestPassed;
+          const isActive = i === activeIdx;
+
+          if (isPassed && !wasPassed) {
+            d.classList.add("passed", "just-passed");
+            setTimeout(() => d.classList.remove("just-passed"), 400);
+          }
+          d.classList.toggle("active", isActive);
+        });
+      }
+
+      window.addEventListener("scroll", updateDots, { passive: true });
+      window.addEventListener("resize", updateDots, { passive: true });
+      // Run after entrance animations settle
+      setTimeout(updateDots, 300);
+      setTimeout(updateDots, 1500);
+    </script>
+  </body>
+</html>

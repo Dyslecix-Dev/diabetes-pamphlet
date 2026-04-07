@@ -148,14 +148,16 @@ export default function AmputationStats({ isActive }: { isActive: boolean }) {
       <svg ref={svgRef} className="mx-auto w-full max-w-85" role="img" aria-label="Bar chart showing diabetes-related amputation rates per 100,000 patients" />
 
       {/* Gender comparison */}
-      <div className="mt-4 flex justify-center gap-6">
+      <div className="mt-4 flex justify-center gap-6" role="group" aria-label="Amputation rates by gender">
         {genderData.map((g) => (
           <div key={g.label} className="text-center">
-            <p className="font-mono text-2xl font-bold" style={{ color: "var(--color-danger)" }}>
+            <p className="font-mono text-2xl font-bold" style={{ color: "var(--color-danger)" }} aria-hidden="true">
               {g.rate}
             </p>
             <p className="font-body text-sm" style={{ color: "var(--color-text-muted)" }}>
-              {g.label} / 100k
+              <span className="sr-only">{g.rate} amputations per 100,000 for </span>
+              {g.label}
+              <span aria-hidden="true"> / 100k</span>
             </p>
           </div>
         ))}

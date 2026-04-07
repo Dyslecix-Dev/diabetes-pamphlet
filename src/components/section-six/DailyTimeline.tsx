@@ -135,6 +135,7 @@ export default function DailyTimeline({ isActive = false }: { isActive?: boolean
               border: `2px solid ${scenario === s.id ? "var(--color-green-mid)" : "transparent"}`,
             }}
             title={s.description}
+            aria-label={`${s.label}: ${s.description}`}
           >
             {s.label}
           </button>

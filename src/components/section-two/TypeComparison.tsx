@@ -42,12 +42,12 @@ export default function TypeComparison({ currentStep }: TypeComparisonProps) {
       {!reducedMotion && (
         <style>{`
           @keyframes card-glow-orange {
-            0%, 100% { box-shadow: 0 2px 8px rgba(230, 126, 34, 0.08); }
-            50% { box-shadow: 0 4px 24px 4px rgba(230, 126, 34, 0.3); }
+            0%, 100% { box-shadow: 0 2px 8px rgba(230, 126, 34, 0.1), inset 0 0 0 1px rgba(230, 126, 34, 0.08); transform: scale(1); }
+            50% { box-shadow: 0 6px 32px 6px rgba(230, 126, 34, 0.35), inset 0 0 0 1px rgba(230, 126, 34, 0.15); transform: scale(1.012); }
           }
           @keyframes card-glow-green {
-            0%, 100% { box-shadow: 0 2px 8px rgba(98, 129, 65, 0.08); }
-            50% { box-shadow: 0 4px 24px 4px rgba(98, 129, 65, 0.3); }
+            0%, 100% { box-shadow: 0 2px 8px rgba(98, 129, 65, 0.1), inset 0 0 0 1px rgba(98, 129, 65, 0.08); transform: scale(1); }
+            50% { box-shadow: 0 6px 32px 6px rgba(98, 129, 65, 0.35), inset 0 0 0 1px rgba(98, 129, 65, 0.15); transform: scale(1.012); }
           }
           .card-idle-orange { animation: card-glow-orange 3s ease-in-out infinite; }
           .card-idle-green { animation: card-glow-green 3s ease-in-out 1.5s infinite; }

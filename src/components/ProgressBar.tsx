@@ -21,7 +21,7 @@ export default function ProgressBar() {
   const pct = Math.round(progress * 100);
 
   return (
-    <div role="progressbar" aria-label="Page reading progress" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} className="fixed top-0 right-0 left-0 z-50 h-1 bg-transparent">
+    <div role="progressbar" aria-label="Page reading progress" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} className="fixed top-0 right-0 left-0 z-50 h-2 bg-transparent">
       <div
         className="h-full origin-left bg-[var(--color-green-mid)]"
         style={{

@@ -100,6 +100,13 @@ export default function PlateBuilder() {
         Build Your Plate
       </h3>
 
+      {/* Screen reader live region for plate updates */}
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {plateItems.length === 0
+          ? "Plate is empty. Click or press Enter on a food item to add it."
+          : `Plate has ${plateItems.length} of ${MAX_PLATE_ITEMS} items: ${plateItems.map((i) => i.name).join(", ")}. Total fiber: ${totalFiber.toFixed(1)}g. ${glycemic.label}.`}
+      </div>
+
       {/* Plate area */}
       <div
         className="relative mx-auto mb-4 flex min-h-50 w-70 flex-wrap items-center justify-center gap-2 rounded-full border-4 border-dashed p-8 transition-colors"
@@ -145,7 +152,12 @@ export default function PlateBuilder() {
 
       {plateItems.length > 0 && (
         <div className="mb-4 text-center">
-          <button onClick={() => setPlateItems([])} className="font-body rounded-lg px-3 py-2 text-sm font-semibold text-white" style={{ backgroundColor: "var(--color-danger)" }}>
+          <button
+            onClick={() => setPlateItems([])}
+            aria-label="Clear all items from plate"
+            className="font-body rounded-lg px-3 py-2 text-sm font-semibold text-white"
+            style={{ backgroundColor: "var(--color-danger)" }}
+          >
             Clear Plate
           </button>
         </div>
