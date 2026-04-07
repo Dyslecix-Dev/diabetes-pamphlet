@@ -84,9 +84,9 @@ Building this before Sections 3–4 because it exercises SVG interaction and the
 
 ## Phase 9: Section 6 — Living with Diabetes
 
-- [ ] `DailyTimeline.tsx` — 24-hour horizontal timeline with plotted events (meals, exercise, medication, monitoring). Glucose curve responds to scenario toggles ("skip breakfast", "miss medication", "add walk").
-- [ ] `ClosingCTA.tsx` — summary message, optional resource links
-- [ ] Wire into `ScrollySection` with 6 narrative steps
+- [x] `DailyTimeline.tsx` — 24-hour horizontal timeline with plotted events (meals, exercise, medication, monitoring). Glucose curve responds to scenario toggles ("skip breakfast", "miss medication", "add walk").
+- [x] `ClosingCTA.tsx` — summary message, optional resource links
+- [x] Wire into `ScrollySection` with 6 narrative steps
 
 ## Phase 10: Polish
 
