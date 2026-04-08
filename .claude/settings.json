@@ -17,7 +17,8 @@
       "Bash(sips -g pixelWidth -g pixelHeight /Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/public/images/body-diagram.png)",
       "Bash(pnpm dev:*)",
       "Bash(pnpm astro:*)",
-      "Bash(pnpm tsc:*)"
+      "Bash(pnpm tsc:*)",
+      "Bash(find /Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/src/components/section-* -type f \\\\\\( -name \"*.tsx\" -o -name \"*.jsx\" -o -name \"*.ts\" -o -name \"*.js\" \\\\\\))"
     ],
     "additionalDirectories": ["/Users/wbrandstudio08/Desktop/personal-code/diabetes-pamphlet/src/components"]
   }

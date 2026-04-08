@@ -96,7 +96,7 @@ export default function PlateBuilder() {
 
   return (
     <div className="mx-auto w-full max-w-lg">
-      <h3 className="font-display mb-3 text-center text-xl" style={{ color: "var(--color-green-dark)" }}>
+      <h3 className="font-display mb-2 text-center text-lg" style={{ color: "var(--color-green-dark)" }}>
         Build Your Plate
       </h3>
 
@@ -109,7 +109,7 @@ export default function PlateBuilder() {
 
       {/* Plate area */}
       <div
-        className="relative mx-auto mb-4 flex min-h-50 w-70 flex-wrap items-center justify-center gap-2 rounded-full border-4 border-dashed p-8 transition-colors"
+        className="relative mx-auto mb-3 flex min-h-36 w-60 flex-wrap items-center justify-center gap-1.5 rounded-full border-4 border-dashed p-5 transition-colors"
         style={{
           borderColor: dragOver ? "var(--color-green-mid)" : "var(--color-cream)",
           backgroundColor: dragOver ? "rgba(98, 129, 65, 0.05)" : "rgba(229, 217, 182, 0.2)",
@@ -138,12 +138,12 @@ export default function PlateBuilder() {
           <button
             key={item.id}
             onClick={() => removeFromPlate(item.id)}
-            className="flex flex-col items-center rounded-lg p-1 transition-transform hover:scale-110"
+            className="flex flex-col items-center rounded-lg p-0.5 transition-transform hover:scale-110"
             aria-label={`Remove ${item.name} from plate`}
             title={`Remove ${item.name}`}
           >
-            <span className="text-3xl">{item.emoji}</span>
-            <span className="font-body text-xs" style={{ color: "var(--color-text-primary)" }}>
+            <span className="text-2xl">{item.emoji}</span>
+            <span className="font-body text-xs leading-tight" style={{ color: "var(--color-text-primary)" }}>
               {item.name}
             </span>
           </button>
@@ -151,7 +151,7 @@ export default function PlateBuilder() {
       </div>
 
       {plateItems.length > 0 && (
-        <div className="mb-4 text-center">
+        <div className="mb-2 text-center">
           <button
             onClick={() => setPlateItems([])}
             aria-label="Clear all items from plate"
@@ -164,7 +164,7 @@ export default function PlateBuilder() {
       )}
 
       {/* Food items */}
-      <div className="mb-4 grid grid-cols-5 gap-1.5">
+      <div className="mb-3 grid grid-cols-5 gap-1">
         {FOOD_ITEMS.map((item) => {
           const onPlate = plateItems.some((p) => p.id === item.id);
           return (
@@ -174,7 +174,7 @@ export default function PlateBuilder() {
               onDragStart={(e) => e.dataTransfer.setData("text/plain", item.id)}
               onClick={() => !onPlate && addToPlate(item)}
               disabled={onPlate || plateItems.length >= MAX_PLATE_ITEMS}
-              className="flex min-h-11 min-w-11 flex-col items-center rounded-lg p-2 text-center transition-opacity"
+              className="flex flex-col items-center rounded-md p-1 text-center transition-opacity"
               style={{
                 opacity: onPlate ? 0.35 : 1,
                 backgroundColor: "var(--color-cream)",
@@ -183,8 +183,8 @@ export default function PlateBuilder() {
               }}
               aria-label={`${item.name}, ${item.fiber}g fiber, ${item.glycemicImpact} glycemic impact${onPlate ? " (on plate)" : ""}`}
             >
-              <span className="text-xl">{item.emoji}</span>
-              <span className="font-body text-xs leading-tight" style={{ color: "var(--color-text-primary)" }}>
+              <span className="text-base">{item.emoji}</span>
+              <span className="font-body leading-tight" style={{ color: "var(--color-text-primary)", fontSize: "0.6rem" }}>
                 {item.name}
               </span>
             </button>
@@ -193,7 +193,7 @@ export default function PlateBuilder() {
       </div>
 
       {/* Meters */}
-      <div className="space-y-3 rounded-xl p-4" style={{ backgroundColor: "var(--color-cream)" + "40" }}>
+      <div className="space-y-2 rounded-xl p-3" style={{ backgroundColor: "var(--color-cream)" + "40" }}>
         {/* Fiber meter */}
         <div>
           <div className="font-body mb-1 flex justify-between text-sm">

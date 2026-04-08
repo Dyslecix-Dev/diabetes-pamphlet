@@ -37,20 +37,20 @@ export default function ScreeningGap({ currentStep }: ScreeningGapProps) {
   return (
     <div role="figure" aria-label={`Diabetes screening rates: ${strictRate}% strict testing, ${broadRate}% broad testing`}>
       {/* Bar chart: screening rates */}
-      <h3 className="font-display mb-5 text-center text-2xl" style={{ color: "var(--color-green-dark)" }}>
+      <h3 className="font-display mb-3 text-center text-xl" style={{ color: "var(--color-green-dark)" }}>
         Blood Glucose Testing Rates
       </h3>
 
-      <div className="mx-auto max-w-md space-y-5">
+      <div className="mx-auto max-w-md space-y-3">
         {/* Strict testing bar */}
         <div>
-          <div className="mb-1.5 flex justify-between" style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
+          <div className="mb-1 flex justify-between" style={{ color: "var(--color-text-muted)", fontSize: "0.85rem" }}>
             <span>Strict testing (3-year window)</span>
             <span className="font-bold" style={{ color: "var(--color-danger)" }}>
               {strictRate}%
             </span>
           </div>
-          <div className="h-10 overflow-hidden rounded-md" style={{ background: "var(--color-cream)" }}>
+          <div className="h-7 overflow-hidden rounded-md" style={{ background: "var(--color-cream)" }}>
             <div
               className="h-full rounded-md"
               style={{
@@ -64,13 +64,13 @@ export default function ScreeningGap({ currentStep }: ScreeningGapProps) {
 
         {/* Broad testing bar */}
         <div>
-          <div className="mb-1.5 flex justify-between" style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
+          <div className="mb-1 flex justify-between" style={{ color: "var(--color-text-muted)", fontSize: "0.85rem" }}>
             <span>Broad testing (incl. random glucose)</span>
             <span className="font-bold" style={{ color: "var(--color-green-mid)" }}>
               {broadRate}%
             </span>
           </div>
-          <div className="h-10 overflow-hidden rounded-md" style={{ background: "var(--color-cream)" }}>
+          <div className="h-7 overflow-hidden rounded-md" style={{ background: "var(--color-cream)" }}>
             <div
               className="h-full rounded-md"
               style={{
@@ -85,7 +85,7 @@ export default function ScreeningGap({ currentStep }: ScreeningGapProps) {
 
         {/* 1 in 4 callout — slides up */}
         <div
-          className="rounded-lg px-5 py-4 text-center"
+          className="rounded-lg px-4 py-3 text-center"
           style={{
             background: "var(--color-danger-15)",
             opacity: showUntested ? 1 : 0,
@@ -93,7 +93,7 @@ export default function ScreeningGap({ currentStep }: ScreeningGapProps) {
             transition: slideUp("0s"),
           }}
         >
-          <span className="font-display text-4xl font-bold" style={{ color: "var(--color-danger)" }}>
+          <span className="font-display text-3xl font-bold" style={{ color: "var(--color-danger)" }}>
             1 in 4
           </span>
           <p className="mt-1" style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
@@ -103,21 +103,21 @@ export default function ScreeningGap({ currentStep }: ScreeningGapProps) {
 
         {/* USPSTF Timeline — slides up */}
         <div
-          className="mt-6"
+          className="mt-3"
           style={{
             opacity: showTimeline ? 1 : 0,
             transform: showTimeline ? "translateY(0)" : "translateY(20px)",
             transition: slideUp("0s"),
           }}
         >
-          <h4 className="mb-3 text-center font-bold" style={{ color: "var(--color-green-dark)", fontSize: "0.95rem" }}>
+          <h4 className="mb-2 text-center font-bold" style={{ color: "var(--color-green-dark)", fontSize: "0.85rem" }}>
             USPSTF Screening Guidelines
           </h4>
-          <div className="relative ml-4 border-l-2 pl-6" style={{ borderColor: "var(--color-green-mid)" }}>
+          <div className="relative ml-4 border-l-2 pl-5" style={{ borderColor: "var(--color-green-mid)" }}>
             {timeline.map((item, i) => (
               <div
                 key={item.year}
-                className="relative mb-5 last:mb-0"
+                className="relative mb-3 last:mb-0"
                 style={{
                   opacity: showTimeline ? 1 : 0,
                   transform: showTimeline ? "translateY(0)" : "translateY(16px)",
@@ -132,10 +132,10 @@ export default function ScreeningGap({ currentStep }: ScreeningGapProps) {
                     borderColor: "var(--color-green-mid)",
                   }}
                 />
-                <span className="font-display text-xl font-bold" style={{ color: "var(--color-green-dark)" }}>
+                <span className="font-display text-base font-bold" style={{ color: "var(--color-green-dark)" }}>
                   {item.year}
                 </span>
-                <p style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>{item.recommendation}</p>
+                <p style={{ color: "var(--color-text-muted)", fontSize: "0.8rem", lineHeight: "1.3" }}>{item.recommendation}</p>
               </div>
             ))}
           </div>
@@ -143,7 +143,7 @@ export default function ScreeningGap({ currentStep }: ScreeningGapProps) {
 
         {/* Hopeful closing — slides up */}
         <div
-          className="mt-5 rounded-lg px-5 py-4 text-center"
+          className="mt-3 rounded-lg px-4 py-3 text-center"
           style={{
             background: "var(--color-green-dark-10)",
             opacity: showHope ? 1 : 0,

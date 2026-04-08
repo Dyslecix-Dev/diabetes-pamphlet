@@ -42,7 +42,7 @@ export default function TreatmentTimeline({ activeStage }: { activeStage: number
   const lineHeight = (visibleCount - 1) * STAGE_ROW_HEIGHT;
 
   return (
-    <div className="mx-auto w-full max-w-sm">
+    <div className="mx-auto w-full">
       <h3 className="font-display mb-4 text-center text-xl" style={{ color: "var(--color-green-dark)" }}>
         Treatment Spectrum
       </h3>

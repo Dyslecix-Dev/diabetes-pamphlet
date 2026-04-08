@@ -79,7 +79,7 @@ export default function FiberMeter({ isActive }: { isActive: boolean }) {
   const dangerY = yScale(140);
 
   return (
-    <div className="mx-auto w-full max-w-sm">
+    <div className="mx-auto w-full">
       <h3 className="font-display mb-2 text-center text-xl" style={{ color: "var(--color-green-dark)" }}>
         Fiber's Effect on Blood Sugar
       </h3>

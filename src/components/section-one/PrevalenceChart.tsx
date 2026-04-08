@@ -16,7 +16,7 @@ const innerH = HEIGHT - MARGIN.top - MARGIN.bottom;
 export default function PrevalenceChart({ isActive }: PrevalenceChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [showTable, setShowTable] = useState(false);
+
   const reducedMotion = useReducedMotion();
 
   const data = prevalenceData.data;
@@ -129,42 +129,35 @@ export default function PrevalenceChart({ isActive }: PrevalenceChartProps) {
         aria-label="Line chart showing US adult diabetes prevalence from 2001 to 2023. Total prevalence rose from 11.2% to 13.5%."
       />
 
-      {/* Accessible data table toggle */}
-      <button onClick={() => setShowTable((v) => !v)} className="mt-2 text-sm underline" style={{ color: "var(--color-green-mid)" }} aria-expanded={showTable}>
-        {showTable ? "Hide data table" : "View data table"}
-      </button>
-
-      {showTable && (
-        <table className="mt-2 w-full text-sm" role="table" aria-label="Diabetes prevalence data 2001-2023">
-          <caption className="sr-only">Age-adjusted diabetes prevalence among US adults 18+, {prevalenceData.source}</caption>
-          <thead>
-            <tr className="border-b" style={{ borderColor: "var(--color-cream)" }}>
-              <th className="py-1 text-left" scope="col">
-                Period
-              </th>
-              <th className="py-1 text-right" scope="col">
-                Diagnosed %
-              </th>
-              <th className="py-1 text-right" scope="col">
-                Undiagnosed %
-              </th>
-              <th className="py-1 text-right" scope="col">
-                Total %
-              </th>
+      <table className="sr-only" role="table" aria-label="Diabetes prevalence data 2001-2023">
+        <caption className="sr-only">Age-adjusted diabetes prevalence among US adults 18+, {prevalenceData.source}</caption>
+        <thead>
+          <tr className="border-b" style={{ borderColor: "var(--color-cream)" }}>
+            <th className="py-1 text-left" scope="col">
+              Period
+            </th>
+            <th className="py-1 text-right" scope="col">
+              Diagnosed %
+            </th>
+            <th className="py-1 text-right" scope="col">
+              Undiagnosed %
+            </th>
+            <th className="py-1 text-right" scope="col">
+              Total %
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((row) => (
+            <tr key={row.period} className="border-b" style={{ borderColor: "var(--color-cream)" }}>
+              <td className="py-1">{row.period}</td>
+              <td className="py-1 text-right">{row.diagnosed}</td>
+              <td className="py-1 text-right">{row.undiagnosed}</td>
+              <td className="py-1 text-right">{row.total}</td>
             </tr>
-          </thead>
-          <tbody>
-            {data.map((row) => (
-              <tr key={row.period} className="border-b" style={{ borderColor: "var(--color-cream)" }}>
-                <td className="py-1">{row.period}</td>
-                <td className="py-1 text-right">{row.diagnosed}</td>
-                <td className="py-1 text-right">{row.undiagnosed}</td>
-                <td className="py-1 text-right">{row.total}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

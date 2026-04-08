@@ -87,7 +87,7 @@ export default function ScrollySection({ id, steps, visualComponent, visualGroup
           </div>
         </StickyVisual>
 
-        <div className="lg:w-1/2">
+        <div className="lg:w-2/5">
           <Scrollama onStepEnter={handleStepEnter} offset={0.5}>
             {steps.map((step, i) => (
               <Step data={i} key={i}>

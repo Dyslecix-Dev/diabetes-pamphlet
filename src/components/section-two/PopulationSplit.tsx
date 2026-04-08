@@ -22,12 +22,14 @@ const T1D_COUNT = 7;
 // 33 figures spread evenly across the grid to represent "1 in 3 adults has prediabetes"
 const PREDIABETES_INDICES = new Set(Array.from({ length: 33 }, (_, i) => i * 3 + 1));
 
-// Hardcoded hex values so SVG fill transitions actually animate
 const COLOR_ORANGE = "#e67e22";
 const COLOR_GREEN = "#628141";
 const COLOR_CREAM = "#e5d9b6";
 
 function getFigureColor(index: number, currentStep: number): string {
+  const showPrediabetes = currentStep >= 9;
+  if (showPrediabetes) return "#000000";
+
   const showT1 = currentStep >= 3;
   const showT2 = currentStep >= 5;
 
@@ -66,8 +68,9 @@ export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
             0%, 100% { opacity: 0.3; r: 13; }
             50% { opacity: 1; r: 14.5; }
           }
-          .prediabetes-ring {
-            animation: prediabetes-pulse 2s ease-in-out infinite;
+          @keyframes prediabetes-entrance {
+            0% { opacity: 0; r: 6; }
+            100% { opacity: 1; r: 13; }
           }
         `}</style>
       )}
@@ -87,17 +90,30 @@ export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
         {figures.map(({ index, x, y }) => {
           const color = getFigureColor(index, currentStep);
           const isPrediabetes = showPrediabetes && PREDIABETES_INDICES.has(index);
-          // Green (T2) figures fade in
-          const isT2Entering = index >= T1D_COUNT && showT2;
+          const prediabetesDelay = isPrediabetes ? `${[...PREDIABETES_INDICES].indexOf(index) * 0.05}s` : "0s";
           return (
             <g key={index} transform={`translate(${x}, ${y}) scale(${ICON_SIZE / 24})`}>
-              {isPrediabetes && <circle cx={12} cy={12} r={13} fill="none" stroke="var(--color-danger)" strokeWidth="1.5" className={reducedMotion ? undefined : "prediabetes-ring"} />}
+              {isPrediabetes && (
+                <circle
+                  cx={12}
+                  cy={12}
+                  r={13}
+                  fill="none"
+                  stroke="var(--color-danger)"
+                  strokeWidth="1.5"
+                  className={reducedMotion ? undefined : "prediabetes-ring"}
+                  style={{
+                    opacity: reducedMotion ? 1 : 0,
+                    animation: reducedMotion ? "none" : `prediabetes-entrance 0.4s ease ${prediabetesDelay} forwards, prediabetes-pulse 2s ease-in-out ${prediabetesDelay} infinite`,
+                  }}
+                />
+              )}
               <path
                 d={PERSON_PATH}
                 fill={color}
                 style={{
                   transition: reducedMotion ? "none" : "fill 0.8s ease",
-                  transitionDelay: isT2Entering && !reducedMotion ? `${(index - T1D_COUNT) * 0.025}s` : "0s",
+                  transitionDelay: index >= T1D_COUNT && showT2 && !reducedMotion ? `${(index - T1D_COUNT) * 0.025}s` : "0s",
                 }}
               />
             </g>
@@ -106,15 +122,19 @@ export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
       </svg>
 
       {/* Legend */}
-      <div className="mt-4 ml-32 flex flex-wrap gap-5" style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
-        <span className="flex items-center gap-1.5" style={slideUp(showT1)}>
-          <span className="inline-block h-3.5 w-3.5 rounded-sm" style={{ background: "var(--color-orange)" }} />
-          Type 1 (5–10%)
-        </span>
-        <span className="flex items-center gap-1.5" style={slideUp(showT2, "0.2s")}>
-          <span className="inline-block h-3.5 w-3.5 rounded-sm" style={{ background: "var(--color-green-mid)" }} />
-          Type 2 (90–95%)
-        </span>
+      <div className="mt-4 flex flex-wrap justify-center gap-5" style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
+        {!showPrediabetes && (
+          <>
+            <span className="flex items-center gap-1.5" style={slideUp(showT1)}>
+              <span className="inline-block h-3.5 w-3.5 rounded-sm" style={{ background: "var(--color-orange)" }} />
+              Type 1 (5–10%)
+            </span>
+            <span className="flex items-center gap-1.5" style={slideUp(showT2, "0.2s")}>
+              <span className="inline-block h-3.5 w-3.5 rounded-sm" style={{ background: "var(--color-green-mid)" }} />
+              Type 2 (90–95%)
+            </span>
+          </>
+        )}
         {showPrediabetes && (
           <span className="flex items-center gap-1.5" style={slideUp(showPrediabetes, "0.1s")}>
             <span className="inline-block h-3.5 w-3.5 rounded-sm border" style={{ background: "transparent", borderColor: "var(--color-danger)" }} />
@@ -125,7 +145,7 @@ export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
 
       {/* Prediabetes callout */}
       <div
-        className="mt-3 rounded-md px-4 py-3 font-medium"
+        className="mt-3 ml-100 w-72 rounded-md px-4 py-3 font-medium"
         style={{
           background: "var(--color-danger-15)",
           color: "var(--color-danger)",

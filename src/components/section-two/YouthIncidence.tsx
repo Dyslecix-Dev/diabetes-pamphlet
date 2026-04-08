@@ -31,7 +31,7 @@ const bars = [
 export default function YouthIncidence({ isActive }: YouthIncidenceProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [showTable, setShowTable] = useState(false);
+
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -136,37 +136,31 @@ export default function YouthIncidence({ isActive }: YouthIncidenceProps) {
         aria-label="Bar chart comparing youth diabetes incidence increases: Type 1 at 2.02% per year among 0-19 year olds, Type 2 at 5.31% per year among 10-19 year olds."
       />
 
-      <button onClick={() => setShowTable((v) => !v)} className="mt-2 text-sm underline" style={{ color: "var(--color-green-mid)" }} aria-expanded={showTable}>
-        {showTable ? "Hide data table" : "View data table"}
-      </button>
-
-      {showTable && (
-        <table className="mt-2 w-full text-sm" role="table" aria-label="Youth diabetes incidence data">
-          <caption className="sr-only">Annual incidence increase from SEARCH for Diabetes in Youth Study</caption>
-          <thead>
-            <tr className="border-b" style={{ borderColor: "var(--color-cream)" }}>
-              <th className="py-1 text-left" scope="col">
-                Type
-              </th>
-              <th className="py-1 text-right" scope="col">
-                Annual Increase
-              </th>
-              <th className="py-1 text-right" scope="col">
-                Population
-              </th>
+      <table className="sr-only" role="table" aria-label="Youth diabetes incidence data">
+        <caption className="sr-only">Annual incidence increase from SEARCH for Diabetes in Youth Study</caption>
+        <thead>
+          <tr className="border-b" style={{ borderColor: "var(--color-cream)" }}>
+            <th className="py-1 text-left" scope="col">
+              Type
+            </th>
+            <th className="py-1 text-right" scope="col">
+              Annual Increase
+            </th>
+            <th className="py-1 text-right" scope="col">
+              Population
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {bars.map((b) => (
+            <tr key={b.label} className="border-b" style={{ borderColor: "var(--color-cream)" }}>
+              <td className="py-1">{b.label}</td>
+              <td className="py-1 text-right">+{b.value}%/yr</td>
+              <td className="py-1 text-right">{b.population}</td>
             </tr>
-          </thead>
-          <tbody>
-            {bars.map((b) => (
-              <tr key={b.label} className="border-b" style={{ borderColor: "var(--color-cream)" }}>
-                <td className="py-1">{b.label}</td>
-                <td className="py-1 text-right">+{b.value}%/yr</td>
-                <td className="py-1 text-right">{b.population}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

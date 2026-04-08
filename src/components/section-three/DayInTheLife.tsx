@@ -203,7 +203,7 @@ function InsulinKeys({ step, animated }: { step: number; animated: boolean }) {
   const rejected = step === 3;
   const keyColor = rejected ? "var(--color-danger)" : "var(--color-green-mid)";
   const keyY = rejected ? KEY_Y_REJECTED : KEY_Y_HEALTHY;
-  const keyXPositions = [CELLS[0].cx, CELLS[1].cx, CELLS[2].cx];
+  const keyXPositions = [CELLS[0].cx, CELLS[1].cx, CELLS[2].cx, CELLS[3].cx];
 
   return (
     <g>
@@ -216,12 +216,6 @@ function InsulinKeys({ step, animated }: { step: number; animated: boolean }) {
           </text>
           {/* Key shaft */}
           <rect x={6} y={-2.5} width={12} height={5} rx={1.5} fill={keyColor} opacity={0.9} />
-          {/* Rejection X, offset to the right of shaft */}
-          {rejected && (
-            <text x={26} y={5} fontSize="13" fill="var(--color-danger)" fontWeight="bold" aria-hidden="true">
-              ✕
-            </text>
-          )}
         </g>
       ))}
 
