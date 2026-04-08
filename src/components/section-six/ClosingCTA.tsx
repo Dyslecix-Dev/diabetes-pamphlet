@@ -40,7 +40,7 @@ export default function ClosingCTA() {
             href={r.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-body flex items-center justify-between rounded-lg px-4 py-3 text-sm transition-colors"
+            className="resource-link font-body flex items-center justify-between rounded-lg px-4 py-3 text-sm"
             style={{
               backgroundColor: "var(--color-cream)",
               color: "var(--color-green-dark)",

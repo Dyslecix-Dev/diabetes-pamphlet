@@ -97,7 +97,7 @@ export default function ScreeningGap({ currentStep }: ScreeningGapProps) {
             1 in 4
           </span>
           <p className="mt-1" style={{ color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
-            adults with overweight or obesity went untested in 3 years
+            overweight or obese adults went untested in 3 years
           </p>
         </div>
 

@@ -24,7 +24,7 @@ const steps: ScrollStep[] = [
   {
     content: (
       <p>
-        It usually begins in childhood or early adult years. Peak age of diagnosis: <strong>10 years old</strong> for T1D.
+        It usually begins in childhood or early adult years. Peak age of diagnosis: <strong>10 years old</strong> for Type 1.
       </p>
     ),
   },
@@ -59,7 +59,7 @@ const steps: ScrollStep[] = [
   {
     content: (
       <p>
-        Both types are rising in youth. T1D incidence increased <strong>2% annually</strong>, T2D by <strong>5.3% annually</strong> among 10–19 year olds.
+        Both types are rising in youth. Type 1 incidence increased <strong>2% annually</strong>, Type 2 by <strong>5.3% annually</strong> among 10–19 year olds.
       </p>
     ),
   },

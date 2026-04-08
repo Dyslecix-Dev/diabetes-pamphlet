@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface FoodItem {
   id: string;
@@ -77,6 +77,23 @@ function getGlycemicScore(items: FoodItem[]): { label: string; color: string; sc
 export default function PlateBuilder() {
   const [plateItems, setPlateItems] = useState<FoodItem[]>([]);
   const [dragOver, setDragOver] = useState(false);
+  const [showClear, setShowClear] = useState(false);
+  const [clearExiting, setClearExiting] = useState(false);
+
+  // Animate Clear Plate button entrance/exit
+  useEffect(() => {
+    if (plateItems.length > 0 && !showClear) {
+      setShowClear(true);
+      setClearExiting(false);
+    } else if (plateItems.length === 0 && showClear) {
+      setClearExiting(true);
+      const timer = setTimeout(() => {
+        setShowClear(false);
+        setClearExiting(false);
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [plateItems.length, showClear]);
 
   const addToPlate = useCallback((item: FoodItem) => {
     setPlateItems((prev) => {
@@ -96,9 +113,24 @@ export default function PlateBuilder() {
 
   return (
     <div className="mx-auto w-full max-w-lg">
-      <h3 className="font-display mb-2 text-center text-lg" style={{ color: "var(--color-green-dark)" }}>
-        Build Your Plate
-      </h3>
+      <div className="mb-2 text-center">
+        {showClear ? (
+          <div key="clear" style={{ animation: clearExiting ? "clearBtnExit 0.25s ease-in forwards" : "clearBtnEnter 0.3s ease-out forwards" }}>
+            <button
+              onClick={() => setPlateItems([])}
+              aria-label="Clear all items from plate"
+              className="font-body cursor-pointer rounded-lg px-3 py-2 text-sm font-semibold text-white"
+              style={{ backgroundColor: "var(--color-danger)" }}
+            >
+              Clear Plate
+            </button>
+          </div>
+        ) : (
+          <h3 className="font-display text-center text-lg" style={{ color: "var(--color-green-dark)" }}>
+            Build Your Plate
+          </h3>
+        )}
+      </div>
 
       {/* Screen reader live region for plate updates */}
       <div className="sr-only" aria-live="polite" aria-atomic="true">
@@ -149,19 +181,6 @@ export default function PlateBuilder() {
           </button>
         ))}
       </div>
-
-      {plateItems.length > 0 && (
-        <div className="mb-2 text-center">
-          <button
-            onClick={() => setPlateItems([])}
-            aria-label="Clear all items from plate"
-            className="font-body rounded-lg px-3 py-2 text-sm font-semibold text-white"
-            style={{ backgroundColor: "var(--color-danger)" }}
-          >
-            Clear Plate
-          </button>
-        </div>
-      )}
 
       {/* Food items */}
       <div className="mb-3 grid grid-cols-5 gap-1">

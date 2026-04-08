@@ -145,7 +145,7 @@ export default function PopulationSplit({ currentStep }: PopulationSplitProps) {
 
       {/* Prediabetes callout */}
       <div
-        className="mt-3 ml-100 w-72 rounded-md px-4 py-3 font-medium"
+        className="mt-3 rounded-md px-4 py-3 text-center font-medium"
         style={{
           background: "var(--color-danger-15)",
           color: "var(--color-danger)",
